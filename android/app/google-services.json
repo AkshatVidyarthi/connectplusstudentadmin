@@ -1,0 +1,107 @@
+{
+  "project_info": {
+    "project_number": "658477509030",
+    "firebase_url": "https://connect-plus-student-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "connect-plus-student",
+    "storage_bucket": "connect-plus-student.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:658477509030:android:e84efcf7d879b48fccc767",
+        "android_client_info": {
+          "package_name": "com.example.connect_plus_student"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "658477509030-6u4itlrhhiemnkhl37st5fop068ersk8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.connect_plus_student",
+            "certificate_hash": "0c2188d491ca7a61f59b8f0351aaccec387b0436"
+          }
+        },
+        {
+          "client_id": "658477509030-atuu591kpl9malpobhh8vqu1mqbtc7qk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.connect_plus_student",
+            "certificate_hash": "a58965e777d200417ed3bb4d669af06fac7e176d"
+          }
+        },
+        {
+          "client_id": "658477509030-vkuvv2tscumqaqri6c7mugiasgjve5tk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.connect_plus_student",
+            "certificate_hash": "1705186a73a7fdeb4b8589a85a85b54b01b9f4fa"
+          }
+        },
+        {
+          "client_id": "658477509030-5ooq9kqo6p4ddi08g6sit4ttvi026mke.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB21J9bRDXwPOt2zzM-TjGlnFdkijOtv1c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "658477509030-5ooq9kqo6p4ddi08g6sit4ttvi026mke.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "658477509030-e72ckp4492kiemfhtkt8nd42pb817uju.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.connectPlusStudent"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:658477509030:android:0e036874cb251f02ccc767",
+        "android_client_info": {
+          "package_name": "com.example.connectplusstudentadmin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "658477509030-5ooq9kqo6p4ddi08g6sit4ttvi026mke.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB21J9bRDXwPOt2zzM-TjGlnFdkijOtv1c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "658477509030-5ooq9kqo6p4ddi08g6sit4ttvi026mke.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "658477509030-e72ckp4492kiemfhtkt8nd42pb817uju.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.connectPlusStudent"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

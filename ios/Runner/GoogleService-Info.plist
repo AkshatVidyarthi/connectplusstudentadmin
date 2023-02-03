@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>658477509030-i2vmvu61ef5n4joe445e5de6q6h9r2md.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.658477509030-i2vmvu61ef5n4joe445e5de6q6h9r2md</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>658477509030-6u4itlrhhiemnkhl37st5fop068ersk8.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCDkqHCqM6nIFeyV1gyr9hnnPhUOYAhKYk</string>
+	<key>GCM_SENDER_ID</key>
+	<string>658477509030</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.example.connectplusstudentadmin</string>
+	<key>PROJECT_ID</key>
+	<string>connect-plus-student</string>
+	<key>STORAGE_BUCKET</key>
+	<string>connect-plus-student.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:658477509030:ios:d0cba6084c17d2b1ccc767</string>
+	<key>DATABASE_URL</key>
+	<string>https://connect-plus-student-default-rtdb.asia-southeast1.firebasedatabase.app</string>
+</dict>
+</plist>
