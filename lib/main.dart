@@ -1,4 +1,5 @@
 
+import 'package:connectplusstudentadmin/LoginScreen.dart';
 import 'package:connectplusstudentadmin/MainScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -22,6 +23,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Firebase',
       home: HomeScreen(),
     );

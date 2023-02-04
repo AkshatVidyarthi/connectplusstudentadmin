@@ -1,27 +1,24 @@
-
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-class ViewJobs extends StatefulWidget {
-  const ViewJobs({Key? key}) : super(key: key);
+class ViewInternships extends StatefulWidget {
+  const ViewInternships({Key? key}) : super(key: key);
 
   @override
-  State<ViewJobs> createState() => _ViewJobsState();
+  State<ViewInternships> createState() => _ViewInternshipsState();
 }
-
-class _ViewJobsState extends State<ViewJobs> {
-  bool isVerified=false;
+class _ViewInternshipsState extends State<ViewInternships> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('VIEW JOBS'),
         elevation: 8.0,
+        title: Text('VIEW INTERNSHIPS'),
         backgroundColor: Colors.deepPurpleAccent,
       ),
       body: StreamBuilder(
         stream:
-        FirebaseFirestore.instance.collection('jobposted').snapshots(),
+        FirebaseFirestore.instance.collection('InternshipsPosted').snapshots(),
         builder: (BuildContext context,
             AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
@@ -36,9 +33,9 @@ class _ViewJobsState extends State<ViewJobs> {
             } else {
               final data = snapshot.data;
               if (data != null) {
-                final ViewJobs = data.docs;
+                final ViewInterns = data.docs;
                 return ListView(
-                  children: ViewJobs.map((document) {
+                  children: ViewInterns.map((document) {
                     return Column(
                       children: [
                         SizedBox(
@@ -109,24 +106,6 @@ class _ViewJobsState extends State<ViewJobs> {
                                             fontWeight:
                                             FontWeight.bold)),
                                     Text("${document.get("jobtitle")}"),
-                                  ],
-                                ),
-                                Row(
-                                  children: [
-                                    Text('MAX experience',
-                                        style: TextStyle(
-                                            fontWeight:
-                                            FontWeight.bold)),
-                                    Text("${document.get("maxexp")}"),
-                                  ],
-                                ),
-                                Row(
-                                  children: [
-                                    Text('Minimum Experience',
-                                        style: TextStyle(
-                                            fontWeight:
-                                            FontWeight.bold)),
-                                    Text("${document.get("minexp")}"),
                                   ],
                                 ),
                                 SizedBox(width :100,),

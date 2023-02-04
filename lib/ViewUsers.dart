@@ -60,6 +60,7 @@ class _ViewUsersState extends State<ViewUsers> {
                                 Padding(
                                   padding: EdgeInsets.all(8.0),
                                   child: Card(
+                                    elevation: 8.0,
                                     child: Column(
                                       children: [
                                         Row(
