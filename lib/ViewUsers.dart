@@ -118,7 +118,8 @@ class _ViewUsersState extends State<ViewUsers> {
                                         ),
                                         SizedBox(width :100,),
                                         IconButton(
-                                            onPressed: () {
+                                            onPressed: () async{
+                                             await document.reference.delete();
                                             },
                                             icon: Icon(Icons.delete)),
                                       ],

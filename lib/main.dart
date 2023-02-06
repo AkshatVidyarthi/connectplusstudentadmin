@@ -26,7 +26,7 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Firebase',
-      home: HomeScreen(),
+      home: LoginScreen(),
     );
   }
 }
