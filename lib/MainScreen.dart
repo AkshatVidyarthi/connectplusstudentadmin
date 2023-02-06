@@ -18,16 +18,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Connect+ Student Dashboard',style: GoogleFonts.arsenal(fontWeight: FontWeight.bold)),
-        actions: [
-          Row(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text('ADMIN',style: TextStyle(color: Colors.black)),
-              ),
-            ],
-          ),
-        ],
+
         backgroundColor: Colors.deepPurpleAccent,
       ),
       drawer: Drawer(
@@ -56,11 +47,13 @@ class _HomeScreenState extends State<HomeScreen> {
           )),
           SizedBox(height: 10,),
           SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+
             child: Row(
               mainAxisAlignment:MainAxisAlignment.spaceAround ,
               children: [
                 Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(16.0),
                   child: Container(
                     decoration: BoxDecoration(
                       color: Colors.deepPurpleAccent,
@@ -81,6 +74,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                 ),
+                SizedBox(width: 20,),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Container(
@@ -103,6 +97,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                 ),
+                SizedBox(width: 20,),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Container(
@@ -125,6 +120,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                 ),
+                SizedBox(width: 20,),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Container(

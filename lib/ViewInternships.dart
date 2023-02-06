@@ -106,7 +106,8 @@ class _ViewInternshipsState extends State<ViewInternships> {
                                     children: [
                                       Text('DELETE INTERNSHIP: ',style: TextStyle(fontWeight: FontWeight.bold),),
                                       IconButton(
-                                          onPressed: () {
+                                          onPressed: () async{
+                                            await document.reference.delete();
                                           },
                                           icon: Icon(Icons.delete)),
                                     ],
