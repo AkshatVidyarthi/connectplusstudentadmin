@@ -1,6 +1,7 @@
 
 import 'package:connectplusstudentadmin/LoginScreen.dart';
 import 'package:connectplusstudentadmin/MainScreen.dart';
+import 'package:connectplusstudentadmin/ViewInternships.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';

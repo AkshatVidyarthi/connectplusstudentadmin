@@ -45,75 +45,92 @@ class _ViewInternshipsState extends State<ViewInternships> {
                           padding: EdgeInsets.all(8.0),
                           child: Card(
                             elevation: 5.0,
-                            child: Column(
-                              children: [
-                                Row(
-                                  mainAxisAlignment:MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text('Company Name:',
-                                        style: TextStyle(
-                                            fontWeight:
-                                            FontWeight.bold)),
-                                    Text("${document.get("Companyname")}"),
-                                    Switch(
-                                      value: document.get("isVerified"),
-                                      onChanged: (value) {
-                                        document.reference.set(
-                                          {"isVerified": value},
-                                          SetOptions(merge: true),
-                                        );
-                                      },
-                                      activeTrackColor:
-                                      Colors.deepPurpleAccent,
-                                      activeColor: Colors.black,
-                                    )
-                                  ],
-                                ),
-                                Row(
-                                  children: [
-                                    Text('Location',
-                                        style: TextStyle(
-                                            fontWeight:
-                                            FontWeight.bold)),
-                                    Text("${document.get("Location")}"),
-                                  ],
-                                ),
-                                SizedBox(height: 20),
-                                Row(
-                                  children: [
-                                    Text('email',
-                                        style: TextStyle(
-                                            fontWeight:
-                                            FontWeight.bold)),
-                                    Text(
-                                        "${document.get("email")}"),
-                                  ],
-                                ),
-                                SizedBox(height: 20),
-                                Row(
-                                  children: [
-                                    Text('Job Description',
-                                        style: TextStyle(
-                                            fontWeight:
-                                            FontWeight.bold)),
-                                    Text("${document.get("jobdescription")}"),
-                                  ],
-                                ),
-                                Row(
-                                  children: [
-                                    Text('Job Title',
-                                        style: TextStyle(
-                                            fontWeight:
-                                            FontWeight.bold)),
-                                    Text("${document.get("jobtitle")}"),
-                                  ],
-                                ),
-                                SizedBox(width :100,),
-                                IconButton(
-                                    onPressed: () {
-                                    },
-                                    icon: Icon(Icons.delete)),
-                              ],
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                children: [
+                                  SizedBox(height: 10,),
+                                  Row(
+                                    children: [
+                                      Text('COMPANY NAME: ',
+                                          style: TextStyle(
+                                              fontWeight:
+                                              FontWeight.bold)),
+                                      Text("${document.get("Companyname")}"),
+
+                                    ],
+                                  ),
+                                  SizedBox(height: 10,),
+                                  Row(
+                                    children: [
+                                      Text('LOCATION: ',
+                                          style: TextStyle(
+                                              fontWeight:
+                                              FontWeight.bold)),
+                                      Text("${document.get("Location")}"),
+                                    ],
+                                  ),
+                                  SizedBox(height: 10),
+                                  Row(
+                                    children: [
+                                      Text('EMAIL: ',
+                                          style: TextStyle(
+                                              fontWeight:
+                                              FontWeight.bold)),
+                                      Text(
+                                          "${document.get("email")}"),
+                                    ],
+                                  ),
+                                  SizedBox(height: 10),
+                                  Row(
+                                    children: [
+                                      Text('JOB DESCRIPTION: ',
+                                          style: TextStyle(
+                                              fontWeight:
+                                              FontWeight.bold)),
+                                      Text("${document.get("jobdescription")}"),
+                                    ],
+                                  ),
+                                  SizedBox(height: 10,),
+                                  Row(
+                                    children: [
+                                      Text('JOB TITLE: ',
+                                          style: TextStyle(
+                                              fontWeight:
+                                              FontWeight.bold)),
+                                      Text("${document.get("jobtitle")}"),
+                                    ],
+                                  ),
+                                  SizedBox(height: 10,),
+                                  Row(
+                                    children: [
+                                      Text('DELETE INTERNSHIP: ',style: TextStyle(fontWeight: FontWeight.bold),),
+                                      IconButton(
+                                          onPressed: () {
+                                          },
+                                          icon: Icon(Icons.delete)),
+                                    ],
+                                  ),
+                                  SizedBox(height: 10,),
+                                  Row(
+                                    children: [
+                                      Text('CONFIRM INTERNSHIP: ',style: TextStyle(fontWeight: FontWeight.bold),),
+                                      Switch(
+                                        value: document.get("isVerified"),
+                                        onChanged: (value) {
+                                          document.reference.set(
+                                            {"isVerified": value},
+                                            SetOptions(merge: true),
+                                          );
+                                        },
+                                        activeTrackColor:
+                                        Colors.deepPurpleAccent,
+                                        activeColor: Colors.black,
+                                      ),
+                                    ],
+                                  )
+                                ],
+                              ),
                             ),
                           ),
                         ),
