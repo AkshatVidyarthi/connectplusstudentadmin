@@ -1,3 +1,4 @@
+import 'package:connectplusstudentadmin/ViewFeedbacks.dart';
 import 'package:connectplusstudentadmin/ViewInternships.dart';
 import 'package:connectplusstudentadmin/ViewJobs.dart';
 import 'package:connectplusstudentadmin/ViewUsers.dart';
@@ -135,7 +136,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         title: Text('VIEW FEEDBACKS',style: GoogleFonts.arsenal(fontSize: 24,fontWeight: FontWeight.bold,color: Colors.black)),
                         onTap: (){
                           Navigator.push(context, MaterialPageRoute(builder: (context) {
-                            return ViewUsers();
+                            return ViewFeedbacks();
                           },));
                         },
                         trailing: Icon(Icons.view_comfy_sharp,size: 32,color: Colors.black),
