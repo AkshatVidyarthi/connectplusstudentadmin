@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
+import 'jobs_list_screen.dart';
+
 class ViewJobs extends StatefulWidget {
   const ViewJobs({Key? key}) : super(key: key);
 
@@ -14,10 +16,8 @@ class _ViewJobsState extends State<ViewJobs> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
-
       appBar: AppBar(
-        title: Text('VIEW JOBS'),
+        title: const Text('VIEW JOBS'),
         elevation: 8.0,
         backgroundColor: Colors.deepPurpleAccent,
       ),
@@ -25,7 +25,7 @@ class _ViewJobsState extends State<ViewJobs> {
         stream: FirebaseFirestore.instance.collection('jobposted').snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(
+            return const Center(
               child: CircularProgressIndicator(),
             );
           } else {
@@ -43,143 +43,30 @@ class _ViewJobsState extends State<ViewJobs> {
                     return FutureBuilder<QuerySnapshot<Map<String, dynamic>>>(
                       builder: (context, snapShot1) {
                         final document = snapShot1.data?.docs.first;
-                        ViewJobs[index].reference.get().then((value) => print(value.get("data")));
-                        return Text("${document?.get("fullName")}");
-                       /* return Column(
-                          children: [
-                            SizedBox(
-                              height: 30,
+                        ViewJobs[index]
+                            .reference
+                            .get()
+                            .then((value) => print(value.get("data")));
+                        return InkWell(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) {
+                                return JobListScreen(reference:  ViewJobs[index].reference,);
+                              }),
+                            );
+                          },
+                          child: Card(
+                            child: Column(
+                              children: [
+                                Text("${document?.get("fullName")}"),
+                                Text("${document?.get("course")}"),
+                                Text("${document?.get("passingYear")}"),
+                                Text("${document?.get("id")}"),
+                              ],
                             ),
-                            Padding(
-                              padding: EdgeInsets.all(8.0),
-                              child: Card(
-                                elevation: 5.0,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Column(
-                                    children: [
-                                      SizedBox(
-                                        height: 10,
-                                      ),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        children: [
-                                          Text('COMPANY NAME: ',
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold)),
-                                          Text("${document?.get("fullName")}"),
-                                        ],
-                                      ),
-                                      SizedBox(
-                                        height: 10,
-                                      ),
-                                      Row(
-                                        children: [
-                                          Text('LOCATION: ',
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold)),
-                                          Text("${document?.get("Location")}"),
-                                        ],
-                                      ),
-                                      SizedBox(height: 10),
-                                      Row(
-                                        children: [
-                                          Text('EMAIL: ',
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold)),
-                                          Text("${document?.get("email")}"),
-                                        ],
-                                      ),
-                                      SizedBox(height: 10),
-                                      Row(
-                                        children: [
-                                          Text('JOB DESCRIPTION: ',
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold)),
-                                          Text(
-                                              "${document?.get("jobdescription")}"),
-                                        ],
-                                      ),
-                                      SizedBox(
-                                        height: 10,
-                                      ),
-                                      Row(
-                                        children: [
-                                          Text('JOB TITLE: ',
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold)),
-                                          Text("${document?.get("jobtitle")}"),
-                                        ],
-                                      ),
-                                      SizedBox(
-                                        height: 10,
-                                      ),
-                                      Row(
-                                        children: [
-                                          Text('MAXIMUM EXPERIENCE(IN YEARS): ',
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold)),
-                                          Text("${document?.get("maxexp")}"),
-                                        ],
-                                      ),
-                                      SizedBox(
-                                        height: 10,
-                                      ),
-                                      Row(
-                                        children: [
-                                          Text('MINIMUM EXPERIENCE(IN YEARS): ',
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold)),
-                                          Text("${document?.get("minexp")}"),
-                                        ],
-                                      ),
-                                      SizedBox(
-                                        height: 10,
-                                      ),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        children: [
-                                          Text('DELETE JOB: ',
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold)),
-                                          IconButton(
-                                              onPressed: () {},
-                                              icon: Icon(Icons.delete)),
-                                        ],
-                                      ),
-                                      SizedBox(
-                                        height: 10,
-                                      ),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        children: [
-                                          Text('CONFIRM JOB: ',
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold)),
-                                          Switch(
-                                            value: document?.get("isVerified"),
-                                            onChanged: (value) {
-                                              document?.reference.set(
-                                                {"isVerified": value},
-                                                SetOptions(merge: true),
-                                              );
-                                            },
-                                            activeTrackColor:
-                                                Colors.deepPurpleAccent,
-                                            activeColor: Colors.black,
-                                          ),
-                                        ],
-                                      )
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        );*/
+                          ),
+                        );
                       },
                       future: FirebaseFirestore.instance
                           .collection("users")
@@ -190,7 +77,7 @@ class _ViewJobsState extends State<ViewJobs> {
                   itemCount: ViewJobs.length,
                 );
               } else {
-                return Center(
+                return const Center(
                   child: Text("Data not found"),
                 );
               }
