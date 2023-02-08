@@ -105,7 +105,7 @@ class JobListScreen extends StatelessWidget {
                          Text("${document[index]["minexp"]}"),
                        ],
                      ),
-                    /* SizedBox(height: 10,),
+                     SizedBox(height: 10,),
                      Row(
                        children: [
                          Text('ALLOW USER?',style: TextStyle(
@@ -114,10 +114,15 @@ class JobListScreen extends StatelessWidget {
                          Switch(
                            value: document[index]["isVerified"],
                            onChanged: (value) {
-                             document.reference.set(
+                             document[index]["isVerified"] = value;
+                             print(document);
+                             snapShot1.data?.reference.update({
+                               "data":FieldValue.arrayUnion([document])
+                             },);
+                             /*document[index].reference.set(
                                {"isVerified": value},
                                SetOptions(merge: true),
-                             );
+                             );*/
                            },
                            activeTrackColor:
                            Colors.deepPurpleAccent,
@@ -133,11 +138,11 @@ class JobListScreen extends StatelessWidget {
                          ),),
                          IconButton(
                              onPressed: () async{
-                               await document.reference.delete();
+                               await document[index].reference.delete();
                              },
                              icon: Icon(Icons.delete)),
                        ],
-                     ),*/
+                     ),
                    ],
                  ),
                ),
