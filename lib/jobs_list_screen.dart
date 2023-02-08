@@ -75,6 +75,7 @@ class JobListScreen extends StatelessWidget {
                          Text("${document[index]["jobdescription"]}"),
                        ],
                      ),
+                     //sodpsl
                      SizedBox(height: 10,),
                      Row(
                        children: [
