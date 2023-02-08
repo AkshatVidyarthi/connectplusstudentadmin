@@ -9,10 +9,8 @@ class ViewJobs extends StatefulWidget {
   @override
   State<ViewJobs> createState() => _ViewJobsState();
 }
-
 class _ViewJobsState extends State<ViewJobs> {
   bool isVerified = false;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,10 +36,24 @@ class _ViewJobsState extends State<ViewJobs> {
               if (data != null) {
                 final ViewJobs = data.docs;
                 return ListView.builder(
-                  itemBuilder: (conetext, index) {
+                  itemBuilder: (context, index) {
                     final userId = ViewJobs[index].id;
                     return FutureBuilder<QuerySnapshot<Map<String, dynamic>>>(
                       builder: (context, snapShot1) {
+                        if(snapShot1.connectionState==ConnectionState.waiting)
+                          {
+                            return Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          }
+                        else{
+                          if(snapShot1.hasError)
+                            {
+                              return Center(
+                                child: Text("${snapshot.error}"),
+                              );
+                            }
+                        }
                         final document = snapShot1.data?.docs.first;
                         ViewJobs[index]
                             .reference
@@ -56,14 +68,52 @@ class _ViewJobsState extends State<ViewJobs> {
                               }),
                             );
                           },
-                          child: Card(
-                            child: Column(
-                              children: [
-                                Text("${document?.get("fullName")}"),
-                                Text("${document?.get("course")}"),
-                                Text("${document?.get("passingYear")}"),
-                                Text("${document?.get("id")}"),
-                              ],
+                          child: Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: Card(
+                              child: Column(
+                                children: [
+                                  Row(
+                                    children: [
+                                      Text('FULLNAME:  ',
+                                          style: TextStyle(
+                                              fontWeight:
+                                              FontWeight.bold)),
+                                      Text("${document?.get("fullName")}"),
+                                    ],
+                                  ),
+                                  SizedBox(height: 10,),
+                                  Row(
+                                    children: [
+                                      Text('COURSE:  ',
+                                          style: TextStyle(
+                                              fontWeight:
+                                              FontWeight.bold)),
+                                      Text("${document?.get("course")}"),
+                                    ],
+                                  ),
+                                  SizedBox(height: 10,),
+                                  Row(
+                                    children: [
+                                      Text('PASSING YEAR:  ',
+                                          style: TextStyle(
+                                              fontWeight:
+                                              FontWeight.bold)),
+                                      Text("${document?.get("passingYear")}"),
+                                    ],
+                                  ),
+                                  SizedBox(height: 10,),
+                                  Row(
+                                    children: [
+                                      Text('ID:  ',
+                                          style: TextStyle(
+                                              fontWeight:
+                                              FontWeight.bold)),
+                                      Text("${document?.get("id")}"),
+                                    ],
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         );

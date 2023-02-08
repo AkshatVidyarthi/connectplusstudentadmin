@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 class ViewUsers extends StatefulWidget {
   const ViewUsers({Key? key}) : super(key: key);
 
@@ -15,7 +16,8 @@ class _ViewUsersState extends State<ViewUsers> {
         length: 3,
         child: Scaffold(
           appBar: AppBar(
-            title: Text('ADMIN APP'),
+            backgroundColor: Colors.deepPurpleAccent,
+            title: Text('View Users'),
             bottom: TabBar(
               tabs: [
                 Tab(
@@ -64,14 +66,51 @@ class _ViewUsersState extends State<ViewUsers> {
                                     child: Column(
                                       children: [
                                         Row(
-                                          mainAxisAlignment:MainAxisAlignment.spaceBetween,
                                           children: [
-                                            Text('Course: ',
+                                            Text('COURSE: ',
                                                 style: TextStyle(
                                                     fontWeight:
                                                     FontWeight.bold)),
                                             Text("${document.get("course")}"),
-
+                                          ],
+                                        ),
+                                        SizedBox(height: 10,),
+                                        Row(
+                                          children: [
+                                            Text('FULLNAME:  ',
+                                                style: TextStyle(
+                                                    fontWeight:
+                                                    FontWeight.bold)),
+                                            Text("${document.get("fullName")}"),
+                                          ],
+                                        ),
+                                        SizedBox(height: 10),
+                                        Row(
+                                          children: [
+                                            Text('PASSING YEAR:  ',
+                                                style: TextStyle(
+                                                    fontWeight:
+                                                    FontWeight.bold)),
+                                            Text(
+                                                "${document.get("passingYear")}"),
+                                          ],
+                                        ),
+                                        SizedBox(height: 10),
+                                        Row(
+                                          children: [
+                                            Text('CATEGORY: ',
+                                                style: TextStyle(
+                                                    fontWeight:
+                                                    FontWeight.bold)),
+                                            Text("${document.get("type")}"),
+                                          ],
+                                        ),
+                                       SizedBox(height: 10,),
+                                        Row(
+                                          children: [
+                                            Text('ALLOW USER?',style: TextStyle(
+                                              fontWeight: FontWeight.bold
+                                            )),
                                             Switch(
                                               value: document.get("isVerified"),
                                               onChanged: (value) {
@@ -83,45 +122,21 @@ class _ViewUsersState extends State<ViewUsers> {
                                               activeTrackColor:
                                               Colors.deepPurpleAccent,
                                               activeColor: Colors.black,
-                                            )
+                                            ),
                                           ],
                                         ),
                                         Row(
                                           children: [
-                                            Text('fullName: ',
-                                                style: TextStyle(
-                                                    fontWeight:
-                                                    FontWeight.bold)),
-                                            Text("${document.get("fullName")}"),
+                                            Text('DELETE USER?',style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                            ),),
+                                            IconButton(
+                                                onPressed: () async{
+                                                  await document.reference.delete();
+                                                },
+                                                icon: Icon(Icons.delete)),
                                           ],
                                         ),
-                                        SizedBox(height: 20),
-                                        Row(
-                                          children: [
-                                            Text('PassingYear: ',
-                                                style: TextStyle(
-                                                    fontWeight:
-                                                    FontWeight.bold)),
-                                            Text(
-                                                "${document.get("passingYear")}"),
-                                          ],
-                                        ),
-                                        SizedBox(height: 20),
-                                        Row(
-                                          children: [
-                                            Text('Category: ',
-                                                style: TextStyle(
-                                                    fontWeight:
-                                                    FontWeight.bold)),
-                                            Text("${document.get("type")}"),
-                                          ],
-                                        ),
-                                        SizedBox(width :100,),
-                                        IconButton(
-                                            onPressed: () async{
-                                             await document.reference.delete();
-                                            },
-                                            icon: Icon(Icons.delete)),
                                       ],
                                     ),
                                   ),
@@ -172,14 +187,50 @@ class _ViewUsersState extends State<ViewUsers> {
                                     child: Column(
                                       children: [
                                         Row(
-                                          mainAxisAlignment:MainAxisAlignment.spaceBetween,
+
                                           children: [
-                                            Text('Course: ',
+                                            Text('COURSE: ',
                                                 style: TextStyle(
                                                     fontWeight:
                                                     FontWeight.bold)),
                                             Text("${document.get("course")}"),
-
+                                          ],
+                                        ),
+                                        SizedBox(height: 10,),
+                                        Row(
+                                          children: [
+                                            Text('FULL NAME: ',
+                                                style: TextStyle(
+                                                    fontWeight:
+                                                    FontWeight.bold)),
+                                            Text("${document.get("fullName")}"),
+                                          ],
+                                        ),
+                                        SizedBox(height: 10),
+                                        Row(
+                                          children: [
+                                            Text('PASSING YEAR: ',
+                                                style: TextStyle(
+                                                    fontWeight:
+                                                    FontWeight.bold)),
+                                            Text(
+                                                "${document.get("passingYear")}"),
+                                          ],
+                                        ),
+                                        SizedBox(height: 10),
+                                        Row(
+                                          children: [
+                                            Text('CATEGORY: ',
+                                                style: TextStyle(
+                                                    fontWeight:
+                                                    FontWeight.bold)),
+                                            Text("${document.get("type")}"),
+                                          ],
+                                        ),
+                                        SizedBox(height: 10,),
+                                        Row(
+                                          children: [
+                                            Text('ALLOW USER',style: TextStyle(fontWeight: FontWeight.bold),),
                                             Switch(
                                               value: document.get("isVerified"),
                                               onChanged: (value) {
@@ -191,45 +242,20 @@ class _ViewUsersState extends State<ViewUsers> {
                                               activeTrackColor:
                                               Colors.deepPurpleAccent,
                                               activeColor: Colors.black,
-                                            )
+                                            ),
                                           ],
                                         ),
+                                        SizedBox(height: 10,),
                                         Row(
                                           children: [
-                                            Text('fullName: ',
-                                                style: TextStyle(
-                                                    fontWeight:
-                                                    FontWeight.bold)),
-                                            Text("${document.get("fullName")}"),
+                                            Text("DELETE: ",style: TextStyle(fontWeight: FontWeight.bold),),
+                                            IconButton(
+                                                onPressed: () async{
+                                                  await document.reference.delete();
+                                                },
+                                                icon: Icon(Icons.delete)),
                                           ],
                                         ),
-                                        SizedBox(height: 20),
-                                        Row(
-                                          children: [
-                                            Text('PassingYear: ',
-                                                style: TextStyle(
-                                                    fontWeight:
-                                                    FontWeight.bold)),
-                                            Text(
-                                                "${document.get("passingYear")}"),
-                                          ],
-                                        ),
-                                        SizedBox(height: 20),
-                                        Row(
-                                          children: [
-                                            Text('Category: ',
-                                                style: TextStyle(
-                                                    fontWeight:
-                                                    FontWeight.bold)),
-                                            Text("${document.get("type")}"),
-                                          ],
-                                        ),
-                                        SizedBox(width :100,),
-                                        IconButton(
-                                            onPressed: () async{
-                                              await document.reference.delete();
-                                            },
-                                            icon: Icon(Icons.delete)),
                                       ],
                                     ),
                                   ),
@@ -278,16 +304,53 @@ class _ViewUsersState extends State<ViewUsers> {
                                   child: Card(
                                     elevation: 8.0,
                                     child: Column(
+
                                       children: [
                                         Row(
-                                          mainAxisAlignment:MainAxisAlignment.spaceBetween,
                                           children: [
-                                            Text('Course: ',
+                                            Text('COURSE: ',
                                                 style: TextStyle(
                                                     fontWeight:
                                                     FontWeight.bold)),
                                             Text("${document.get("course")}"),
-
+                                            SizedBox(height: 10,),
+                                          ],
+                                        ),
+                                        SizedBox(height: 10,),
+                                        Row(
+                                          children: [
+                                            Text('FULL NAME: ',
+                                                style: TextStyle(
+                                                    fontWeight:
+                                                    FontWeight.bold)),
+                                            Text("${document.get("fullName")}"),
+                                          ],
+                                        ),
+                                        SizedBox(height: 10),
+                                        Row(
+                                          children: [
+                                            Text('PASSING YEAR: ',
+                                                style: TextStyle(
+                                                    fontWeight:
+                                                    FontWeight.bold)),
+                                            Text(
+                                                "${document.get("passingYear")}"),
+                                          ],
+                                        ),
+                                        SizedBox(height: 10),
+                                        Row(
+                                          children: [
+                                            Text('Category: ',
+                                                style: TextStyle(
+                                                    fontWeight:
+                                                    FontWeight.bold)),
+                                            Text("${document.get("type")}"),
+                                          ],
+                                        ),
+                                        SizedBox(height: 10,),
+                                        Row(
+                                          children: [
+                                            Text('ALLOW USER',style: TextStyle(fontWeight: FontWeight.bold),),
                                             Switch(
                                               value: document.get("isVerified"),
                                               onChanged: (value) {
@@ -299,45 +362,20 @@ class _ViewUsersState extends State<ViewUsers> {
                                               activeTrackColor:
                                               Colors.deepPurpleAccent,
                                               activeColor: Colors.black,
-                                            )
+                                            ),
                                           ],
                                         ),
+                                        SizedBox(height: 10,),
                                         Row(
                                           children: [
-                                            Text('fullName: ',
-                                                style: TextStyle(
-                                                    fontWeight:
-                                                    FontWeight.bold)),
-                                            Text("${document.get("fullName")}"),
+                                            Text('DELETE',style: TextStyle(fontWeight: FontWeight.bold),),
+                                            IconButton(
+                                                onPressed: () async{
+                                                  await document.reference.delete();
+                                                },
+                                                icon: Icon(Icons.delete)),
                                           ],
                                         ),
-                                        SizedBox(height: 20),
-                                        Row(
-                                          children: [
-                                            Text('PassingYear: ',
-                                                style: TextStyle(
-                                                    fontWeight:
-                                                    FontWeight.bold)),
-                                            Text(
-                                                "${document.get("passingYear")}"),
-                                          ],
-                                        ),
-                                        SizedBox(height: 20),
-                                        Row(
-                                          children: [
-                                            Text('Category: ',
-                                                style: TextStyle(
-                                                    fontWeight:
-                                                    FontWeight.bold)),
-                                            Text("${document.get("type")}"),
-                                          ],
-                                        ),
-                                        SizedBox(width :100,),
-                                        IconButton(
-                                            onPressed: () async{
-                                              await document.reference.delete();
-                                            },
-                                            icon: Icon(Icons.delete)),
                                       ],
                                     ),
                                   ),

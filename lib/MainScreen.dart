@@ -1,3 +1,4 @@
+import 'package:connectplusstudentadmin/LoginScreen.dart';
 import 'package:connectplusstudentadmin/ViewFeedbacks.dart';
 import 'package:connectplusstudentadmin/ViewInternships.dart';
 import 'package:connectplusstudentadmin/ViewJobs.dart';
@@ -18,6 +19,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        elevation: 8.0,
         title: Text('Connect+ Student Dashboard',style: GoogleFonts.arsenal(fontWeight: FontWeight.bold)),
 
         backgroundColor: Colors.deepPurpleAccent,
@@ -34,6 +36,59 @@ class _HomeScreenState extends State<HomeScreen> {
             Text('AKSHAT VIDYARTHI',style: GoogleFonts.arsenal(fontWeight: FontWeight.bold,fontSize: 20),),
             SizedBox(height: 6,),
             Text('ADMIN PANEL',style: TextStyle(fontWeight: FontWeight.bold)),
+            SizedBox(height: 10,),
+            ListTile(
+              style: ListTileStyle.drawer,
+              leading: Icon(Icons.view_comfy_sharp,size: 30),
+              title: Text('VIEW USERS',style: GoogleFonts.cairo(fontWeight: FontWeight.bold,fontSize: 18)),
+              onTap: (){
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return ViewUsers();
+                },));
+              },
+            ),
+            ListTile(
+              style: ListTileStyle.drawer,
+              leading: Icon(Icons.view_comfy_sharp,size: 30),
+              title: Text('VIEW JOBS',style: GoogleFonts.cairo(fontWeight: FontWeight.bold,fontSize: 18)),
+              onTap: (){
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return ViewJobs();
+                },));
+              },
+            ),
+            ListTile(
+              style: ListTileStyle.drawer,
+              leading: Icon(Icons.view_comfy_sharp,size: 30),
+              title: Text('VIEW INTERNSHIPS',style: GoogleFonts.cairo(fontWeight: FontWeight.bold,fontSize: 18)),
+              onTap: (){
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return ViewInternships();
+                },));
+              },
+            ),
+            ListTile(
+              style: ListTileStyle.drawer,
+              leading: Icon(Icons.view_comfy_sharp,size: 30),
+              title: Text('VIEW FEEDBACKS',style: GoogleFonts.cairo(fontWeight: FontWeight.bold,fontSize: 18)),
+              onTap: (){
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return ViewFeedbacks();
+                },));
+              },
+            ),
+            ListTile(
+              style: ListTileStyle.drawer,
+              leading: Icon(Icons.logout,size: 30),
+              title: Text('LOGOUT',style: GoogleFonts.cairo(fontWeight: FontWeight.bold,fontSize: 18)),
+              onTap: (){
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return LoginScreen();
+                },));
+              },
+
+            ),
+
 
           ],
         ),
