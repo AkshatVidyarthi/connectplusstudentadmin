@@ -1,6 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:connectplusstudentadmin/InternshipListScreen.dart';
 import 'package:flutter/material.dart';
+
+import 'jobs_list_screen.dart';
+
 class ViewInternships extends StatefulWidget {
   const ViewInternships({Key? key}) : super(key: key);
 
@@ -8,21 +11,20 @@ class ViewInternships extends StatefulWidget {
   State<ViewInternships> createState() => _ViewInternshipsState();
 }
 class _ViewInternshipsState extends State<ViewInternships> {
+  bool isVerified = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        title: const Text('VIEW INTERNSHIPS'),
         elevation: 8.0,
-        title: Text('VIEW INTERNSHIPS'),
         backgroundColor: Colors.deepPurpleAccent,
       ),
       body: StreamBuilder(
-        stream:
-        FirebaseFirestore.instance.collection('InternshipsPosted').snapshots(),
-        builder: (BuildContext context,
-            AsyncSnapshot<QuerySnapshot> snapshot) {
+        stream: FirebaseFirestore.instance.collection('InternshipsPosted').snapshots(),
+        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(
+            return const Center(
               child: CircularProgressIndicator(),
             );
           } else {
@@ -34,114 +36,99 @@ class _ViewInternshipsState extends State<ViewInternships> {
               final data = snapshot.data;
               if (data != null) {
                 final ViewInterns = data.docs;
-                return ListView(
-                  children: ViewInterns.map((document) {
-                    return Column(
-                      children: [
-                        SizedBox(
-                          height: 30,
-                        ),
-                        Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child: Card(
-                            elevation: 5.0,
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
+                return ListView.builder(
+                  itemBuilder: (context, index) {
+                    final userId = ViewInterns[index].id;
+                    return FutureBuilder<QuerySnapshot<Map<String, dynamic>>>(
+                      builder: (context, snapShot2) {
+                        if(snapShot2.connectionState==ConnectionState.waiting)
+                        {
+                          return Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        }
+                        else{
+                          if(snapShot2.hasError)
+                          {
+                            return Center(
+                              child: Text("${snapshot.error}"),
+                            );
+                          }
+                        }
+                        final document = snapShot2.data?.docs.first;
+                        ViewInterns[index]
+                            .reference
+                            .get()
+                            .then((value) => print(value.get("data")));
+                        return InkWell(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) {
+                                return InternshipListScreen(reference:  ViewInterns[index].reference,);
+                              }),
+                            );
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: Card(
                               child: Column(
                                 children: [
-                                  SizedBox(height: 10,),
                                   Row(
                                     children: [
-                                      Text('COMPANY NAME: ',
+                                      Text('FULLNAME:  ',
                                           style: TextStyle(
                                               fontWeight:
                                               FontWeight.bold)),
-                                      Text("${document.get("Companyname")}"),
-
-                                    ],
-                                  ),
-                                  SizedBox(height: 10,),
-                                  Row(
-                                    children: [
-                                      Text('LOCATION: ',
-                                          style: TextStyle(
-                                              fontWeight:
-                                              FontWeight.bold)),
-                                      Text("${document.get("Location")}"),
-                                    ],
-                                  ),
-                                  SizedBox(height: 10),
-                                  Row(
-                                    children: [
-                                      Text('EMAIL: ',
-                                          style: TextStyle(
-                                              fontWeight:
-                                              FontWeight.bold)),
-                                      Text(
-                                          "${document.get("email")}"),
-                                    ],
-                                  ),
-                                  SizedBox(height: 10),
-                                  Row(
-                                    children: [
-                                      Text('JOB DESCRIPTION: ',
-                                          style: TextStyle(
-                                              fontWeight:
-                                              FontWeight.bold)),
-                                      Text("${document.get("jobdescription")}"),
+                                      Text("${document?.get("fullName")}"),
                                     ],
                                   ),
                                   SizedBox(height: 10,),
                                   Row(
                                     children: [
-                                      Text('JOB TITLE: ',
+                                      Text('COURSE:  ',
                                           style: TextStyle(
                                               fontWeight:
                                               FontWeight.bold)),
-                                      Text("${document.get("jobtitle")}"),
+                                      Text("${document?.get("course")}"),
                                     ],
                                   ),
                                   SizedBox(height: 10,),
                                   Row(
                                     children: [
-                                      Text('DELETE INTERNSHIP: ',style: TextStyle(fontWeight: FontWeight.bold),),
-                                      IconButton(
-                                          onPressed: () async{
-                                            await document.reference.delete();
-                                          },
-                                          icon: Icon(Icons.delete)),
+                                      Text('PASSING YEAR:  ',
+                                          style: TextStyle(
+                                              fontWeight:
+                                              FontWeight.bold)),
+                                      Text("${document?.get("passingYear")}"),
                                     ],
                                   ),
                                   SizedBox(height: 10,),
                                   Row(
                                     children: [
-                                      Text('CONFIRM INTERNSHIP: ',style: TextStyle(fontWeight: FontWeight.bold),),
-                                      Switch(
-                                        value: document.get("isVerified"),
-                                        onChanged: (value) {
-                                          document.reference.set(
-                                            {"isVerified": value},
-                                            SetOptions(merge: true),
-                                          );
-                                        },
-                                        activeTrackColor:
-                                        Colors.deepPurpleAccent,
-                                        activeColor: Colors.black,
-                                      ),
+                                      Text('ID:  ',
+                                          style: TextStyle(
+                                              fontWeight:
+                                              FontWeight.bold)),
+                                      Text("${document?.get("id")}"),
                                     ],
-                                  )
+                                  ),
                                 ],
                               ),
                             ),
                           ),
-                        ),
-                      ],
+                        );
+                      },
+                      future: FirebaseFirestore.instance
+                          .collection("users")
+                          .where(userId)
+                          .get(),
                     );
-                  }).toList(),
+                  },
+                  itemCount: ViewInterns.length,
                 );
-              }
-              else {
-                return Center(
+              } else {
+                return const Center(
                   child: Text("Data not found"),
                 );
               }

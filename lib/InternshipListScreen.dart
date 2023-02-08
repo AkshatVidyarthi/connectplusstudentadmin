@@ -1,27 +1,30 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-class JobListScreen extends StatelessWidget {
+
+class InternshipListScreen extends StatelessWidget {
   final DocumentReference<Object?> reference;
-  const JobListScreen({Key? key, required this.reference}) : super(key: key);
+
+  const InternshipListScreen({Key? key, required this.reference}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.deepPurpleAccent,
-        title: Text('VIEW JOBS'),
+        title: Text('VIEW INTERNSHIPS'),
       ),
       body: StreamBuilder<DocumentSnapshot<Object?>>(
-        builder: (context, snapShot1) {
-          if (snapShot1.connectionState == ConnectionState.waiting) {
+        builder: (context, snapShot2) {
+          if (snapShot2.connectionState == ConnectionState.waiting) {
             return Center(
               child: CircularProgressIndicator(),
             );
-          } else if (snapShot1.hasError) {
+          } else if (snapShot2.hasError) {
             return Center(
-              child: Text("${snapShot1.error}"),
+              child: Text("${snapShot2.error}"),
             );
           }
-          final document = snapShot1.data?.get("data");
+          final document = snapShot2.data?.get("data");
           return ListView.builder(
             itemBuilder: (context, index) {
               return Padding(
@@ -83,38 +86,18 @@ class JobListScreen extends StatelessWidget {
                       ),
                       Row(
                         children: [
-                          Text('MAXIMUM EXPERIENCE:  ',
-                              style: TextStyle(fontWeight: FontWeight.bold)),
-                          Text("${document[index]["maxexp"]}"),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Row(
-                        children: [
-                          Text('MINIMUM EXPERIENCE:  ',
-                              style: TextStyle(fontWeight: FontWeight.bold)),
-                          Text("${document[index]["minexp"]}"),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Row(
-                        children: [
                           Text('ALLOW USER?',
                               style: TextStyle(fontWeight: FontWeight.bold)),
                           Switch(
                             value: document[index]["isVerified"],
                             onChanged: (value) {
-                              snapShot1.data?.reference.set(
+                              snapShot2.data?.reference.set(
                                 {"data": FieldValue.arrayRemove(document)},
                               );
 
                               document[index]["isVerified"] = value;
 
-                              snapShot1.data?.reference.set(
+                              snapShot2.data?.reference.set(
                                 {"data": FieldValue.arrayUnion(document)},
                               );
 
@@ -141,11 +124,11 @@ class JobListScreen extends StatelessWidget {
                           ),
                           IconButton(
                               onPressed: () async {
-                                snapShot1.data?.reference.set(
+                                snapShot2.data?.reference.set(
                                   {"data": FieldValue.arrayRemove(document)},
                                 );
                                 document.removeAt(index);
-                                snapShot1.data?.reference.set(
+                                snapShot2.data?.reference.set(
                                   {"data": FieldValue.arrayUnion(document)},
                                 );
                               },
