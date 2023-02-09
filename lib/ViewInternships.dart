@@ -1,12 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:connectplusstudentadmin/InternshipListScreen.dart';
 import 'package:flutter/material.dart';
-
 import 'jobs_list_screen.dart';
-
 class ViewInternships extends StatefulWidget {
   const ViewInternships({Key? key}) : super(key: key);
-
   @override
   State<ViewInternships> createState() => _ViewInternshipsState();
 }
@@ -127,7 +124,8 @@ class _ViewInternshipsState extends State<ViewInternships> {
                   },
                   itemCount: ViewInterns.length,
                 );
-              } else {
+              }
+              else {
                 return const Center(
                   child: Text("Data not found"),
                 );

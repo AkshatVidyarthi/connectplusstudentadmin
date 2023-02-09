@@ -1,8 +1,16 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-class JobListScreen extends StatelessWidget {
+
+class JobListScreen extends StatefulWidget {
   final DocumentReference<Object?> reference;
+
   const JobListScreen({Key? key, required this.reference}) : super(key: key);
+
+  @override
+  State<JobListScreen> createState() => _JobListScreenState();
+}
+
+class _JobListScreenState extends State<JobListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -160,7 +168,7 @@ class JobListScreen extends StatelessWidget {
             itemCount: document.length,
           );
         },
-        stream: reference.snapshots(),
+        stream: widget.reference.snapshots(),
       ),
     );
   }
