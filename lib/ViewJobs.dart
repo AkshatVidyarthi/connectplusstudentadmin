@@ -126,7 +126,8 @@ class _ViewJobsState extends State<ViewJobs> {
                   },
                   itemCount: ViewJobs.length,
                 );
-              } else {
+              }
+              else {
                 return const Center(
                   child: Text("Data not found"),
                 );
