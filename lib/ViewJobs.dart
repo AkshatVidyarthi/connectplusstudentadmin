@@ -38,7 +38,7 @@ class _ViewJobsState extends State<ViewJobs> {
                 return ListView.builder(
                   itemBuilder: (context, index) {
                     final userId = ViewJobs[index].id;
-                    return FutureBuilder<QuerySnapshot<Map<String, dynamic>>>(
+                    return FutureBuilder<DocumentSnapshot<Map<String, dynamic>>>(
                       builder: (context, snapShot1) {
                         if(snapShot1.connectionState==ConnectionState.waiting)
                           {
@@ -54,12 +54,9 @@ class _ViewJobsState extends State<ViewJobs> {
                               );
                             }
                         }
-                        final document = snapShot1.data?.docs.first;
-                        ViewJobs[index]
-                            .reference
-                            .get()
-                            .then((value) => print(value.get("data")));
-                        return InkWell(
+                        final document = snapShot1.data;
+
+                        return (document?.exists ?? false) ? InkWell(
                           onTap: () {
                             Navigator.push(
                               context,
@@ -102,25 +99,15 @@ class _ViewJobsState extends State<ViewJobs> {
                                       Text("${document?.get("passingYear")}"),
                                     ],
                                   ),
-                                  SizedBox(height: 10,),
-                                  Row(
-                                    children: [
-                                      Text('ID:  ',
-                                          style: TextStyle(
-                                              fontWeight:
-                                              FontWeight.bold)),
-                                      Text("${document?.get("id")}"),
-                                    ],
-                                  ),
                                 ],
                               ),
                             ),
                           ),
-                        );
+                        ):SizedBox();
                       },
                       future: FirebaseFirestore.instance
                           .collection("users")
-                          .where(userId)
+                          .doc(userId)
                           .get(),
                     );
                   },
