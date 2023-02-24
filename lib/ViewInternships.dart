@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:connectplusstudentadmin/InternshipListScreen.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'jobs_list_screen.dart';
 
 class ViewInternships extends StatefulWidget {
@@ -74,56 +75,61 @@ class _ViewInternshipsState extends State<ViewInternships> {
                                 child: Padding(
                                   padding: const EdgeInsets.all(16.0),
                                   child: Card(
-                                    child: Column(
-                                      children: [
-                                        Row(
-                                          children: [
-                                            Text('FULLNAME:  ',
-                                                style: TextStyle(
-                                                    fontWeight:
-                                                        FontWeight.bold)),
-                                            Text(
-                                                "${document?.get("fullName")}"),
-                                          ],
-                                        ),
-                                        SizedBox(
-                                          height: 10,
-                                        ),
-                                        Row(
-                                          children: [
-                                            Text('COURSE:  ',
-                                                style: TextStyle(
-                                                    fontWeight:
-                                                        FontWeight.bold)),
-                                            Text("${document?.get("course")}"),
-                                          ],
-                                        ),
-                                        SizedBox(
-                                          height: 10,
-                                        ),
-                                        Row(
-                                          children: [
-                                            Text('PASSING YEAR:  ',
-                                                style: TextStyle(
-                                                    fontWeight:
-                                                        FontWeight.bold)),
-                                            Text(
-                                                "${document?.get("passingYear")}"),
-                                          ],
-                                        ),
-                                        /*SizedBox(
-                                          height: 10,
-                                        ),
-                                        Row(
-                                          children: [
-                                            Text('ID:  ',
-                                                style: TextStyle(
-                                                    fontWeight:
-                                                        FontWeight.bold)),
-                                            Text("${document?.get("id")}"),
-                                          ],
-                                        ),*/
-                                      ],
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(10)),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Column(
+                                        children: [
+                                          Row(
+                                            children: [
+                                              Text('FULLNAME:  ',
+                                                  style: GoogleFonts.cairo(
+                                                      fontSize: 16,fontWeight: FontWeight.bold
+                                                  ),),
+                                              Text(
+                                                  "${document?.get("fullName")}"),
+                                            ],
+                                          ),
+                                          SizedBox(
+                                            height: 10,
+                                          ),
+                                          Row(
+                                            children: [
+                                              Text('COURSE:  ',
+                                                style: GoogleFonts.cairo(
+                                                    fontSize: 16,fontWeight: FontWeight.bold
+                                                ),),
+                                              Text("${document?.get("course")}"),
+                                            ],
+                                          ),
+                                          SizedBox(
+                                            height: 10,
+                                          ),
+                                          Row(
+                                            children: [
+                                              Text('PASSING YEAR:  ',
+                                                style: GoogleFonts.cairo(
+                                                    fontSize: 16,fontWeight: FontWeight.bold
+                                                ),),
+                                              Text(
+                                                  "${document?.get("passingYear")}"),
+                                            ],
+                                          ),
+                                          /*SizedBox(
+                                            height: 10,
+                                          ),
+                                          Row(
+                                            children: [
+                                              Text('ID:  ',
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold)),
+                                              Text("${document?.get("id")}"),
+                                            ],
+                                          ),*/
+                                        ],
+                                      ),
                                     ),
                                   ),
                                 ),

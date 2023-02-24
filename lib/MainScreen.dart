@@ -21,7 +21,6 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         elevation: 8.0,
         title: Text('Connect+ Student Dashboard',style: GoogleFonts.arsenal(fontWeight: FontWeight.bold)),
-
         backgroundColor: Colors.deepPurpleAccent,
       ),
       drawer: Drawer(
