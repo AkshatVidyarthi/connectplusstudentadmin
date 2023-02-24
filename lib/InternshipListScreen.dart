@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class InternshipListScreen extends StatelessWidget {
   final DocumentReference<Object?> reference;
@@ -156,6 +157,34 @@ class InternshipListScreen extends StatelessWidget {
                                   icon: Icon(Icons.delete)),
                             ],
                           ),
+                          SizedBox(height: 8,),
+                          document[index]["attachment"] != null ||
+                              document[index]["attachment"].toString().toLowerCase() != "null"
+                              ? Row(
+                            children: [
+                              Text('DOWNLOAD INTERNSHIP DESCRIPTION',
+                              style: GoogleFonts.cairo(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                              )),
+                              SizedBox(width: 10,),
+                              CircleAvatar(
+                                backgroundColor: Colors.transparent,
+                                child: IconButton(
+                                    onPressed: () async {
+                                      final url = document[index]["attachment"];
+                                      if (await canLaunchUrlString(url)) {
+                                        launchUrlString(
+                                          url,
+                                        );
+                                      }
+                                    },
+                                    icon: Icon(Icons.download,color: Colors.black,
+                                    size: 24,)),
+                              ),
+                            ],
+                          )
+                              : SizedBox(),
                         ],
                       ),
                     ),
