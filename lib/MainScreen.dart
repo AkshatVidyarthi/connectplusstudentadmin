@@ -2,6 +2,7 @@ import 'package:connectplusstudentadmin/LoginScreen.dart';
 import 'package:connectplusstudentadmin/ViewFeedbacks.dart';
 import 'package:connectplusstudentadmin/ViewInternships.dart';
 import 'package:connectplusstudentadmin/ViewJobs.dart';
+import 'package:connectplusstudentadmin/ViewPayments.dart';
 import 'package:connectplusstudentadmin/ViewUsers.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -73,6 +74,16 @@ class _HomeScreenState extends State<HomeScreen> {
               onTap: (){
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
                   return ViewFeedbacks();
+                },));
+              },
+            ),
+            ListTile(
+              style: ListTileStyle.drawer,
+              leading: Icon(Icons.view_comfy_sharp,size: 30),
+              title: Text('VIEW PAYMENTS',style: GoogleFonts.cairo(fontWeight: FontWeight.bold,fontSize: 18)),
+              onTap: (){
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return ViewPayments();
                 },));
               },
             ),
@@ -198,6 +209,30 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                 ),
+                SizedBox(width: 20,),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.deepPurpleAccent,
+                      borderRadius: BorderRadius.all(Radius.circular(20)),
+                    ),
+                    height: 150,
+                    width: 250,
+                    child: Center(
+                      child: ListTile(
+                        title: Text('VIEW PAYMENTS',style: GoogleFonts.arsenal(fontSize: 24,fontWeight: FontWeight.bold,color: Colors.black)),
+                        onTap: (){
+                          Navigator.push(context, MaterialPageRoute(builder: (context) {
+                            return  ViewPayments();
+                          },));
+                        },
+                        trailing: Icon(Icons.view_comfy_sharp,size: 32,color: Colors.black),
+                      ),
+                    ),
+                  ),
+                ),
+
               ],
             ),
           )
