@@ -23,7 +23,7 @@ class _ViewInternshipsState extends State<ViewInternships> {
       ),
       body: StreamBuilder(
         stream: FirebaseFirestore.instance
-            .collection('InternshipsPosted')
+            .collection('PostedInternships')
             .snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
@@ -41,9 +41,124 @@ class _ViewInternshipsState extends State<ViewInternships> {
                 final ViewInterns = data.docs;
                 return ListView.builder(
                   itemBuilder: (context, index) {
-                    final userId = ViewInterns[index].id;
-                    print(userId);
-                    return FutureBuilder<
+                    final document = ViewInterns[index];
+                    return Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Card(
+                        elevation: 8.0,
+                        child: Column(
+                          children: [
+                            Row(
+                              children: [
+                                Text('COMPANY NAME:  ',
+                                    style: TextStyle(fontWeight: FontWeight.bold)),
+                                Text("${document.get("Companyname")}"),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Row(
+                              children: [
+                                Text('LOCATION',
+                                    style: TextStyle(fontWeight: FontWeight.bold)),
+                                Text("${document.get("Location")}"),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Row(
+                              children: [
+                                Text('EMAIL: ',
+                                    style: TextStyle(fontWeight: FontWeight.bold)),
+                                Text("${document.get("email")}"),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Row(
+                              children: [
+                                Text('JOB DESCRIPTION',
+                                    style: TextStyle(fontWeight: FontWeight.bold)),
+                                Text("${document.get("jobdescription")}"),
+                              ],
+                            ),
+                            //sodpsl
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Row(
+                              children: [
+                                Text('JOB TITLE:  ',
+                                    style: TextStyle(fontWeight: FontWeight.bold)),
+                                Text("${document.get("jobtitle")}"),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Row(
+                              children: [
+                                Text('ALLOW USER?',
+                                    style: TextStyle(fontWeight: FontWeight.bold)),
+                                Switch(
+                                  value: document.get("isVerified"),
+                                  onChanged: (value) {
+                                    document.reference.set({
+                                      "isVerified":value,
+                                    },SetOptions(merge: true));
+                                    /*snapShot2.data?.reference.set(
+                                      {"data": FieldValue.arrayRemove(document)},
+                                    );
+
+                                    document[index]["isVerified"] = value;
+
+                                    snapShot2.data?.reference.set(
+                                      {"data": FieldValue.arrayUnion(document)},
+                                    );
+*/
+                                    /*document[index].reference.set(
+                               {"isVerified": value},
+                               SetOptions(merge: true),
+                             );*/
+                                  },
+                                  activeTrackColor: Colors.deepPurpleAccent,
+                                  activeColor: Colors.black,
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Row(
+                              children: [
+                                Text(
+                                  'DELETE USER?',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                IconButton(
+                                    onPressed: () async {
+                                      await document.reference.delete();
+                                      /*snapShot2.data?.reference.set(
+                                        {"data": FieldValue.arrayRemove(document)},
+                                      );
+                                      document.removeAt(index);
+                                      snapShot2.data?.reference.set(
+                                        {"data": FieldValue.arrayUnion(document)},
+                                      );*/
+                                    },
+                                    icon: Icon(Icons.delete)),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                   /* return FutureBuilder<
                         DocumentSnapshot<Map<String, dynamic>>>(
                       builder: (context, snapShot2) {
                         if (snapShot2.connectionState ==
@@ -111,7 +226,7 @@ class _ViewInternshipsState extends State<ViewInternships> {
                                                 "${document?.get("passingYear")}"),
                                           ],
                                         ),
-                                        /*SizedBox(
+                                        *//*SizedBox(
                                           height: 10,
                                         ),
                                         Row(
@@ -122,7 +237,7 @@ class _ViewInternshipsState extends State<ViewInternships> {
                                                         FontWeight.bold)),
                                             Text("${document?.get("id")}"),
                                           ],
-                                        ),*/
+                                        ),*//*
                                       ],
                                     ),
                                   ),
@@ -134,7 +249,7 @@ class _ViewInternshipsState extends State<ViewInternships> {
                           .collection("users")
                           .doc(userId)
                           .get(),
-                    );
+                    );*/
                   },
                   itemCount: ViewInterns.length,
                 );
