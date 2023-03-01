@@ -81,8 +81,6 @@ class _ViewPaymentsState extends State<ViewPayments> {
                       ),),
                     ],
                   ),
-
-
             ],
           ),
         ),

@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:connectplusstudentadmin/InternshipListScreen.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 import 'jobs_list_screen.dart';
 
 class ViewInternships extends StatefulWidget {
@@ -45,13 +47,22 @@ class _ViewInternshipsState extends State<ViewInternships> {
                     return Padding(
                       padding: const EdgeInsets.all(16.0),
                       child: Card(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),),
                         elevation: 8.0,
-                        child: Column(
+                        child:Padding(
+                          padding: EdgeInsets.all(16),
+                        child:
+                        Column(
                           children: [
                             Row(
                               children: [
                                 Text('COMPANY NAME:  ',
-                                    style: TextStyle(fontWeight: FontWeight.bold)),
+                                  style: GoogleFonts.cairo(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                    fontSize: 15,
+                                  ),),
                                 Text("${document.get("Companyname")}"),
                               ],
                             ),
@@ -60,8 +71,12 @@ class _ViewInternshipsState extends State<ViewInternships> {
                             ),
                             Row(
                               children: [
-                                Text('LOCATION',
-                                    style: TextStyle(fontWeight: FontWeight.bold)),
+                                Text('LOCATION: ',
+                                  style: GoogleFonts.cairo(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                    fontSize: 15,
+                                  ),),
                                 Text("${document.get("Location")}"),
                               ],
                             ),
@@ -71,7 +86,11 @@ class _ViewInternshipsState extends State<ViewInternships> {
                             Row(
                               children: [
                                 Text('EMAIL: ',
-                                    style: TextStyle(fontWeight: FontWeight.bold)),
+                                  style: GoogleFonts.cairo(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                    fontSize: 15,
+                                  ),),
                                 Text("${document.get("email")}"),
                               ],
                             ),
@@ -80,8 +99,12 @@ class _ViewInternshipsState extends State<ViewInternships> {
                             ),
                             Row(
                               children: [
-                                Text('JOB DESCRIPTION',
-                                    style: TextStyle(fontWeight: FontWeight.bold)),
+                                Text('JOB DESCRIPTION: ',
+                                  style: GoogleFonts.cairo(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                    fontSize: 15,
+                                  ),),
                                 Text("${document.get("jobdescription")}"),
                               ],
                             ),
@@ -92,7 +115,11 @@ class _ViewInternshipsState extends State<ViewInternships> {
                             Row(
                               children: [
                                 Text('JOB TITLE:  ',
-                                    style: TextStyle(fontWeight: FontWeight.bold)),
+                                  style: GoogleFonts.cairo(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                    fontSize: 15,
+                                  ),),
                                 Text("${document.get("jobtitle")}"),
                               ],
                             ),
@@ -102,27 +129,18 @@ class _ViewInternshipsState extends State<ViewInternships> {
                             Row(
                               children: [
                                 Text('ALLOW USER?',
-                                    style: TextStyle(fontWeight: FontWeight.bold)),
+                                  style: GoogleFonts.cairo(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                    fontSize: 15,
+                                  ),),
                                 Switch(
                                   value: document.get("isVerified"),
                                   onChanged: (value) {
                                     document.reference.set({
                                       "isVerified":value,
                                     },SetOptions(merge: true));
-                                    /*snapShot2.data?.reference.set(
-                                      {"data": FieldValue.arrayRemove(document)},
-                                    );
 
-                                    document[index]["isVerified"] = value;
-
-                                    snapShot2.data?.reference.set(
-                                      {"data": FieldValue.arrayUnion(document)},
-                                    );
-*/
-                                    /*document[index].reference.set(
-                               {"isVerified": value},
-                               SetOptions(merge: true),
-                             );*/
                                   },
                                   activeTrackColor: Colors.deepPurpleAccent,
                                   activeColor: Colors.black,
@@ -136,8 +154,10 @@ class _ViewInternshipsState extends State<ViewInternships> {
                               children: [
                                 Text(
                                   'DELETE USER?',
-                                  style: TextStyle(
+                                  style: GoogleFonts.cairo(
                                     fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                    fontSize: 15,
                                   ),
                                 ),
                                 IconButton(
@@ -154,102 +174,40 @@ class _ViewInternshipsState extends State<ViewInternships> {
                                     icon: Icon(Icons.delete)),
                               ],
                             ),
+                            SizedBox(height: 8,),
+                            document.get("attachment") != null ||
+                                document.get("attachment").toString().toLowerCase() != "null"
+                                ? Row(
+                              children: [
+                                Text('DOWNLOAD INTERNSHIP DESCRIPTION',
+                                    style: GoogleFonts.cairo(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 16,
+                                    )),
+                                SizedBox(width: 10,),
+                                CircleAvatar(
+                                  backgroundColor: Colors.transparent,
+                                  child: IconButton(
+                                      onPressed: () async {
+                                        final url = document.get("attachment");
+                                        if (await canLaunchUrlString(url)) {
+                                          launchUrlString(
+                                            url,
+                                          );
+                                        }
+                                      },
+                                      icon: Icon(Icons.download,color: Colors.black,
+                                        size: 24,)),
+                                ),
+                              ],
+                            )
+                                : SizedBox(),
                           ],
                         ),
                       ),
+                      ),
                     );
-                   /* return FutureBuilder<
-                        DocumentSnapshot<Map<String, dynamic>>>(
-                      builder: (context, snapShot2) {
-                        if (snapShot2.connectionState ==
-                            ConnectionState.waiting) {
-                          return Center(
-                            child: CircularProgressIndicator(),
-                          );
-                        } else {
-                          if (snapShot2.hasError) {
-                            return Center(
-                              child: Text("${snapshot.error}"),
-                            );
-                          }
-                        }
-                        final document = snapShot2.data;
-                        return (snapShot2.data?.exists ?? false)
-                            ? InkWell(
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(builder: (context) {
-                                      return InternshipListScreen(
-                                        reference: ViewInterns[index].reference,
-                                      );
-                                    }),
-                                  );
-                                },
-                                child: Padding(
-                                  padding: const EdgeInsets.all(16.0),
-                                  child: Card(
-                                    child: Column(
-                                      children: [
-                                        Row(
-                                          children: [
-                                            Text('FULLNAME:  ',
-                                                style: TextStyle(
-                                                    fontWeight:
-                                                        FontWeight.bold)),
-                                            Text(
-                                                "${document?.get("fullName")}"),
-                                          ],
-                                        ),
-                                        SizedBox(
-                                          height: 10,
-                                        ),
-                                        Row(
-                                          children: [
-                                            Text('COURSE:  ',
-                                                style: TextStyle(
-                                                    fontWeight:
-                                                        FontWeight.bold)),
-                                            Text("${document?.get("course")}"),
-                                          ],
-                                        ),
-                                        SizedBox(
-                                          height: 10,
-                                        ),
-                                        Row(
-                                          children: [
-                                            Text('PASSING YEAR:  ',
-                                                style: TextStyle(
-                                                    fontWeight:
-                                                        FontWeight.bold)),
-                                            Text(
-                                                "${document?.get("passingYear")}"),
-                                          ],
-                                        ),
-                                        *//*SizedBox(
-                                          height: 10,
-                                        ),
-                                        Row(
-                                          children: [
-                                            Text('ID:  ',
-                                                style: TextStyle(
-                                                    fontWeight:
-                                                        FontWeight.bold)),
-                                            Text("${document?.get("id")}"),
-                                          ],
-                                        ),*//*
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              )
-                            : SizedBox();
-                      },
-                      future: FirebaseFirestore.instance
-                          .collection("users")
-                          .doc(userId)
-                          .get(),
-                    );*/
+
                   },
                   itemCount: ViewInterns.length,
                 );

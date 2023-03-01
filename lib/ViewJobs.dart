@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 import 'jobs_list_screen.dart';
 
@@ -23,7 +24,9 @@ class _ViewJobsState extends State<ViewJobs> {
         backgroundColor: Colors.deepPurpleAccent,
       ),
       body: StreamBuilder(
-        stream: FirebaseFirestore.instance.collection('jobposted').snapshots(),
+        stream: FirebaseFirestore.instance
+            .collection('PostedJobs')
+            .snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(
@@ -40,89 +43,191 @@ class _ViewJobsState extends State<ViewJobs> {
                 final ViewJobs = data.docs;
                 return ListView.builder(
                   itemBuilder: (context, index) {
-                    final userId = ViewJobs[index].id;
-                    return FutureBuilder<DocumentSnapshot<Map<String, dynamic>>>(
-                      builder: (context, snapShot1) {
-                        if(snapShot1.connectionState==ConnectionState.waiting)
-                          {
-                            return Center(
-                              child: CircularProgressIndicator(),
-                            );
-                          }
-                        else{
-                          if(snapShot1.hasError)
-                            {
-                              return Center(
-                                child: Text("${snapshot.error}"),
-                              );
-                            }
-                        }
-                        final document = snapShot1.data;
-
-                        return (document?.exists ?? false) ? InkWell(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) {
-                                return JobListScreen(reference:  ViewJobs[index].reference,);
-                              }),
-                            );
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.all(16.0),
-                            child: Card(
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10)),
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Column(
-                                  children: [
-                                    Row(
-                                      children: [
-                                        Text('FULLNAME:  ',style: GoogleFonts.cairo(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 16,
-                                        )
-                                ),
-                                        Text("${document?.get("fullName")}"),
-                                      ],
-                                    ),
-                                    SizedBox(height: 10,),
-                                    Row(
-                                      children: [
-                                        Text('COURSE:  ',style: GoogleFonts.cairo(
-                                          fontSize: 16,fontWeight: FontWeight.bold
-                                        ),),
-                                        Text("${document?.get("course")}"),
-                                      ],
-                                    ),
-                                    SizedBox(height: 10,),
-                                    Row(
-                                      children: [
-                                        Text('PASSING YEAR:  ',
-                                          style: GoogleFonts.cairo(
-                                              fontSize: 16,fontWeight: FontWeight.bold
-                                          ),),
-                                        Text("${document?.get("passingYear")}"),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ),
+                    final document = ViewJobs[index];
+                    return Padding(
+                      padding: const EdgeInsets.all(24.0),
+                      child: Card(
+                      shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),),
+                        elevation: 8.0,
+                        child: Padding(
+                    padding: EdgeInsets.all(16.0),
+                    child: Column(
+                          children: [
+                            Row(
+                              children: [
+                                Text('COMPANY NAME:  ',
+                                    style: GoogleFonts.cairo(
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black,
+                                      fontSize: 15,
+                                    ),),
+                                Text("${document.get("Companyname")}"),
+                              ],
                             ),
-                          ),
-                        ):SizedBox();
-                      },
-                      future: FirebaseFirestore.instance
-                          .collection("users")
-                          .doc(userId)
-                          .get(),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Row(
+                              children: [
+                                Text('LOCATION: ',
+                                  style: GoogleFonts.cairo(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                    fontSize: 15,
+                                  ),),
+                                Text("${document.get("Location")}"),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Row(
+                              children: [
+                                Text('EMAIL: ',
+                                  style: GoogleFonts.cairo(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                    fontSize: 15,
+                                  ),),
+                                Text("${document.get("email")}"),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Row(
+                              children: [
+                                Text('JOB DESCRIPTION: ',
+                                  style: GoogleFonts.cairo(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                    fontSize: 15,
+                                  ),),
+                                Text("${document.get("jobdescription")}"),
+                              ],
+                            ),
+                            //sodpsl
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Row(
+                              children: [
+                                Text('JOB TITLE:  ',
+                                  style: GoogleFonts.cairo(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                    fontSize: 15,
+                                  ),),
+                                Text("${document.get("jobtitle")}"),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Row(
+                              children: [
+                                Text('MAXIMUM EXPERIENCE:  ',
+                                  style: GoogleFonts.cairo(
+                                      fontSize: 16,fontWeight: FontWeight.bold
+                                  ),),
+                                Text("${document.get("maxexp")}"),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Row(
+                              children: [
+                                Text('MINIMUM EXPERIENCE:  ',
+                                  style: GoogleFonts.cairo(
+                                      fontSize: 16,fontWeight: FontWeight.bold
+                                  ),),
+                                Text("${document.get("maxexp")}"),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Row(
+                              children: [
+                                Text('ALLOW USER?',
+                                  style: GoogleFonts.cairo(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                    fontSize: 15,
+                                  ),),
+                                Switch(
+                                  value: document.get("isVerified"),
+                                  onChanged: (value) {
+                                    document.reference.set({
+                                      "isVerified":value,
+                                    },SetOptions(merge: true));
+
+                                  },
+                                  activeTrackColor: Colors.deepPurpleAccent,
+                                  activeColor: Colors.black,
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Row(
+                              children: [
+                                Text(
+                                  'DELETE USER?',
+                                  style: GoogleFonts.cairo(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                    fontSize: 15,
+                                  ),
+                                ),
+                                IconButton(
+                                    onPressed: () async {
+                                      await document.reference.delete();
+
+                                    },
+                                    icon: Icon(Icons.delete)),
+                              ],
+                            ),
+                            SizedBox(height: 8,),
+                            document.get("attachment") != null ||
+                                document.get("attachment").toString().toLowerCase() != "null"
+                                ? Row(
+                              children: [
+                                Text('DOWNLOAD JOB DESCRIPTION',
+                                    style: GoogleFonts.cairo(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 16,
+                                    )),
+                                SizedBox(width: 10,),
+                                CircleAvatar(
+                                  backgroundColor: Colors.transparent,
+                                  child: IconButton(
+                                      onPressed: () async {
+                                        final url = document.get("attachment");
+                                        if (await canLaunchUrlString(url)) {
+                                          launchUrlString(
+                                            url,
+                                          );
+                                        }
+                                      },
+                                      icon: Icon(Icons.download,color: Colors.black,
+                                        size: 24,)),
+                                ),
+                              ],
+                            )
+                                : SizedBox(),
+                          ],
+                        ),
+                      ),
+                      ),
                     );
                   },
                   itemCount: ViewJobs.length,
                 );
-              }
-              else {
+              } else {
                 return const Center(
                   child: Text("Data not found"),
                 );
