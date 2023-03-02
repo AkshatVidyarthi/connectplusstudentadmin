@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -143,12 +142,37 @@ class _ViewJobsState extends State<ViewJobs> {
                                   style: GoogleFonts.cairo(
                                       fontSize: 16,fontWeight: FontWeight.bold
                                   ),),
-                                Text("${document.get("maxexp")}"),
+                                Text("${document.get("minexp")}"),
                               ],
                             ),
                             SizedBox(
                               height: 10,
                             ),
+                            Row(
+                              children: [
+                                Text('QUALIFICATION:  ',
+                                  style: GoogleFonts.cairo(
+                                      fontSize: 16,fontWeight: FontWeight.bold
+                                  ),),
+                                Text("${document.get("qualification")}"),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Row(
+                              children: [
+                                Text('PACKAGE:  ',
+                                  style: GoogleFonts.cairo(
+                                      fontSize: 16,fontWeight: FontWeight.bold
+                                  ),),
+                                Text("${document.get("selectedsalary")}"),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+
                             Row(
                               children: [
                                 Text('ALLOW USER?',
