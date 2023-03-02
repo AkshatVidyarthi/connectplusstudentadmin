@@ -108,10 +108,39 @@ class _ViewInternshipsState extends State<ViewInternships> {
                                 Text("${document.get("jobdescription")}"),
                               ],
                             ),
-                            //sodpsl
+
                             SizedBox(
                               height: 10,
                             ),
+                            Row(
+                              children: [
+                                Text('DURATION OF THE INTERNSHIP: ',
+                                  style: GoogleFonts.cairo(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                    fontSize: 15,
+                                  ),),
+                                Text("${document.get("duration")}"),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Row(
+                              children: [
+                                Text('STIPEND OFFERED: ',
+                                  style: GoogleFonts.cairo(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                    fontSize: 15,
+                                  ),),
+                                Text("${document.get("stipend")}"),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+
                             Row(
                               children: [
                                 Text('JOB TITLE:  ',
@@ -175,8 +204,7 @@ class _ViewInternshipsState extends State<ViewInternships> {
                               ],
                             ),
                             SizedBox(height: 8,),
-                            document.get("attachment") != null ||
-                                document.get("attachment").toString().toLowerCase() != "null"
+                            document.get("attachment") != null
                                 ? Row(
                               children: [
                                 Text('DOWNLOAD INTERNSHIP DESCRIPTION',

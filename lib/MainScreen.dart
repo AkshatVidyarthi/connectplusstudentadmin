@@ -26,7 +26,7 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       drawer: Drawer(
         elevation: 8.0,
-        backgroundColor: Colors.deepPurpleAccent,
+        backgroundColor: Colors.deepPurpleAccent[100],
         child: Column(
           children: [
             SizedBox(height: 20,),
@@ -114,129 +114,156 @@ class _HomeScreenState extends State<HomeScreen> {
           SizedBox(height: 10,),
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
-
-            child: Row(
+            child: Column(
               mainAxisAlignment:MainAxisAlignment.spaceAround ,
               children: [
-                Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.deepPurpleAccent,
-                      borderRadius: BorderRadius.all(Radius.circular(20)),
-                    ),
-                    height: 150,
-                    width: 250,
-                    child: Center(
-                      child: ListTile(
-                        title: Text('VIEW INTERNSHIPS',style: GoogleFonts.arsenal(fontSize: 24,fontWeight: FontWeight.bold)),
-                        onTap: (){
-                          Navigator.push(context, MaterialPageRoute(builder: (context) {
-                            return ViewInternships();
-                          },));
-                        },
-                        trailing: Icon(Icons.view_comfy_sharp,color: Colors.black,size: 32),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Card(
+                        elevation: 4.0,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            border: Border.all(color: Color(0xFFD1C4E9),width: 1.0),
+                            color: Colors.deepPurple[50],
+                            borderRadius: BorderRadius.all(Radius.circular(4)),
+                          ),
+                          height: 150,
+                          width: 250,
+                          child: Center(
+                            child: ListTile(
+                              title: Text('VIEW INTERNSHIPS',style: GoogleFonts.arsenal(fontSize: 24,fontWeight: FontWeight.bold)),
+                              onTap: (){
+                                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                                  return ViewInternships();
+                                },));
+                              },
+                              trailing: Icon(Icons.view_comfy_sharp,color: Colors.black,size: 32),
+                            ),
+                          ),
+                        ),
                       ),
                     ),
-                  ),
-                ),
-                SizedBox(width: 20,),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.deepPurpleAccent,
-                      borderRadius: BorderRadius.all(Radius.circular(20)),
-                    ),
-                    height: 150,
-                    width: 250,
-                    child: Center(
-                      child: ListTile(
-                        title: Text('VIEW JOBS',style: GoogleFonts.arsenal(fontSize: 24,fontWeight: FontWeight.bold)),
-                        onTap: (){
-                          Navigator.push(context, MaterialPageRoute(builder: (context) {
-                            return ViewJobs();
-                          },));
-                        },
-                        trailing: Icon(Icons.view_comfy_sharp,color: Colors.black,size: 32),
+                    SizedBox(width: 20,),
+                    Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Card(
+                        elevation: 4.0,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            border: Border.all(color: Color(0xFFD1C4E9),width: 1.0),
+                            color: Colors.deepPurple[50],
+                            borderRadius: BorderRadius.all(Radius.circular(4)),
+                          ),
+                          height: 150,
+                          width: 250,
+                          child: Center(
+                            child: ListTile(
+                              title: Text('VIEW JOBS',style: GoogleFonts.arsenal(fontSize: 24,fontWeight: FontWeight.bold)),
+                              onTap: (){
+                                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                                  return ViewJobs();
+                                },));
+                              },
+                              trailing: Icon(Icons.view_comfy_sharp,color: Colors.black,size: 32),
+                            ),
+                          ),
+                        ),
                       ),
                     ),
-                  ),
-                ),
-                SizedBox(width: 20,),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.deepPurpleAccent,
-                      borderRadius: BorderRadius.all(Radius.circular(20)),
-                    ),
-                    height: 150,
-                    width: 250,
-                    child: Center(
-                      child: ListTile(
-                        title: Text('VIEW USERS',style: GoogleFonts.arsenal(fontSize: 24,fontWeight: FontWeight.bold,color: Colors.black)),
-                        onTap: (){
-                          Navigator.push(context, MaterialPageRoute(builder: (context) {
-                            return ViewUsers();
-                          },));
-                        },
-                        trailing: Icon(Icons.view_comfy_sharp,size: 32,color: Colors.black),
+                    SizedBox(width: 20,),
+                    Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Card(
+                        elevation: 4.0,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            border: Border.all(color: Color(0xFFD1C4E9),width: 1.0),
+                            color: Colors.deepPurple[50],
+                            borderRadius: BorderRadius.all(Radius.circular(4)),
+                          ),
+                          height: 150,
+                          width: 250,
+                          child: Center(
+                            child: ListTile(
+                              title: Text('VIEW USERS',style: GoogleFonts.arsenal(fontSize: 24,fontWeight: FontWeight.bold)),
+                              onTap: (){
+                                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                                  return ViewUsers();
+                                },));
+                              },
+                              trailing: Icon(Icons.view_comfy_sharp,color: Colors.black,size: 32),
+                            ),
+                          ),
+                        ),
                       ),
                     ),
-                  ),
+                  ],
                 ),
-                SizedBox(width: 20,),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.deepPurpleAccent,
-                      borderRadius: BorderRadius.all(Radius.circular(20)),
-                    ),
-                    height: 150,
-                    width: 250,
-                    child: Center(
-                      child: ListTile(
-                        title: Text('VIEW FEEDBACKS',style: GoogleFonts.arsenal(fontSize: 24,fontWeight: FontWeight.bold,color: Colors.black)),
-                        onTap: (){
-                          Navigator.push(context, MaterialPageRoute(builder: (context) {
-                            return ViewFeedbacks();
-                          },));
-                        },
-                        trailing: Icon(Icons.view_comfy_sharp,size: 32,color: Colors.black),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    SizedBox(width: 20,),
+                    Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Card(
+                        elevation: 4.0,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            border: Border.all(color: Color(0xFFD1C4E9),width: 1.0),
+                            color: Colors.deepPurple[50],
+                            borderRadius: BorderRadius.all(Radius.circular(4)),
+                          ),
+                          height: 150,
+                          width: 250,
+                          child: Center(
+                            child: ListTile(
+                              title: Text('VIEW FEEDBACKS',style: GoogleFonts.arsenal(fontSize: 24,fontWeight: FontWeight.bold)),
+                              onTap: (){
+                                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                                  return ViewFeedbacks();
+                                },));
+                              },
+                              trailing: Icon(Icons.view_comfy_sharp,color: Colors.black,size: 32),
+                            ),
+                          ),
+                        ),
                       ),
                     ),
-                  ),
-                ),
-                SizedBox(width: 20,),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.deepPurpleAccent,
-                      borderRadius: BorderRadius.all(Radius.circular(20)),
-                    ),
-                    height: 150,
-                    width: 250,
-                    child: Center(
-                      child: ListTile(
-                        title: Text('VIEW PAYMENTS',style: GoogleFonts.arsenal(fontSize: 24,fontWeight: FontWeight.bold,color: Colors.black)),
-                        onTap: (){
-                          Navigator.push(context, MaterialPageRoute(builder: (context) {
-                            return  ViewPayments();
-                          },));
-                        },
-                        trailing: Icon(Icons.view_comfy_sharp,size: 32,color: Colors.black),
+                    SizedBox(width: 20,),
+                    Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Card(
+                        elevation: 4.0,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            border: Border.all(color: Color(0xFFD1C4E9),width: 1.0),
+                            color: Colors.deepPurple[50],
+                            borderRadius: BorderRadius.all(Radius.circular(4)),
+                          ),
+                          height: 150,
+                          width: 250,
+                          child: Center(
+                            child: ListTile(
+                              title: Text('VIEW PAYMENTS',style: GoogleFonts.arsenal(fontSize: 24,fontWeight: FontWeight.bold)),
+                              onTap: (){
+                                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                                  return ViewPayments();
+                                },));
+                              },
+                              trailing: Icon(Icons.view_comfy_sharp,color: Colors.black,size: 32),
+                            ),
+                          ),
+                        ),
                       ),
                     ),
-                  ),
+                  ],
                 ),
-
               ],
             ),
           )
-
           ],
       ),
     );
