@@ -91,6 +91,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           Padding(
                             padding: const EdgeInsets.all(24.0),
                             child: TextFormField(
+                              obscureText: true,
                               onSaved: (value) {
                                 Password = value;
                               },
