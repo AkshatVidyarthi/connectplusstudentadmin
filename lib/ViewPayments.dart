@@ -142,8 +142,31 @@ class _ViewPaymentsState extends State<ViewPayments> {
                                 ],
                               ),
                               FutureBuilder(
+
                                 builder: (context, snapshot) {
-                                  return  Text("${snapshot.data?.get("course")}");
+                                 if(snapshot.connectionState==ConnectionState.waiting)
+                                   {
+                                     return Center(
+                                       child: CircularProgressIndicator(),
+                                     );
+                                   }
+                                 if (snapshot.hasError) {
+                                   return Center(
+                                     child: Text("${snapshot.error}"),
+                                   );
+                                 }
+                                  return Row(
+                                    children: [
+                                      Text('COURSE: ',
+                                      style: GoogleFonts.cairo(
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black,
+                                        fontSize: 15,
+                                      ),),
+                                  Text("${snapshot.data?.get("course")}"
+                                  ) ],
+                                  );
+
                                 },
                                 future: FirebaseFirestore.instance
                                     .collection("users")

@@ -4,9 +4,12 @@ import 'package:connectplusstudentadmin/ViewInternships.dart';
 import 'package:connectplusstudentadmin/ViewJobs.dart';
 import 'package:connectplusstudentadmin/ViewPayments.dart';
 import 'package:connectplusstudentadmin/ViewUsers.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -16,8 +19,36 @@ class HomeScreen extends StatefulWidget {
 }
 //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
 class _HomeScreenState extends State<HomeScreen> {
+
   @override
   Widget build(BuildContext context) {
+    showAlertDialog() {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            content: const Text("Are You Sure You Want to Logout"),
+            actions: [
+              TextButton(
+                child: const Text("Cancel"),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              ),
+              ElevatedButton(
+                child: const Text('LOGOUT'),
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return LoginScreen();
+                  },));
+                }
+              ),
+            ],
+          );
+        },
+      );
+    }
+
     return Scaffold(
       appBar: AppBar(
         elevation: 8.0,
@@ -26,7 +57,7 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       drawer: Drawer(
         elevation: 8.0,
-        backgroundColor: Colors.deepPurpleAccent[100],
+        backgroundColor: Colors.white,
         child: Column(
           children: [
             SizedBox(height: 20,),
@@ -39,8 +70,8 @@ class _HomeScreenState extends State<HomeScreen> {
             SizedBox(height: 10,),
             ListTile(
               style: ListTileStyle.drawer,
-              leading: Icon(Icons.view_comfy_sharp,size: 30),
-              title: Text('VIEW USERS',style: GoogleFonts.cairo(fontWeight: FontWeight.bold,fontSize: 18)),
+              leading: Icon(Icons.view_comfy_sharp,size: 30,color: Colors.black),
+              title: Text('VIEW USERS',style: GoogleFonts.cairo(fontWeight: FontWeight.bold,fontSize: 18,color: Colors.deepPurple)),
               onTap: (){
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
                   return ViewUsers();
@@ -49,8 +80,8 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             ListTile(
               style: ListTileStyle.drawer,
-              leading: Icon(Icons.view_comfy_sharp,size: 30),
-              title: Text('VIEW JOBS',style: GoogleFonts.cairo(fontWeight: FontWeight.bold,fontSize: 18)),
+              leading: Icon(Icons.view_comfy_sharp,size: 30,color: Colors.black),
+              title: Text('VIEW JOBS',style: GoogleFonts.cairo(fontWeight: FontWeight.bold,fontSize: 18,color: Colors.deepPurple)),
               onTap: (){
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
                   return ViewJobs();
@@ -59,8 +90,8 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             ListTile(
               style: ListTileStyle.drawer,
-              leading: Icon(Icons.view_comfy_sharp,size: 30),
-              title: Text('VIEW INTERNSHIPS',style: GoogleFonts.cairo(fontWeight: FontWeight.bold,fontSize: 18)),
+              leading: Icon(Icons.view_comfy_sharp,size: 30,color: Colors.black),
+              title: Text('VIEW INTERNSHIPS',style: GoogleFonts.cairo(fontWeight: FontWeight.bold,fontSize: 18,color: Colors.deepPurple)),
               onTap: (){
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
                   return ViewInternships();
@@ -69,8 +100,8 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             ListTile(
               style: ListTileStyle.drawer,
-              leading: Icon(Icons.view_comfy_sharp,size: 30),
-              title: Text('VIEW FEEDBACKS',style: GoogleFonts.cairo(fontWeight: FontWeight.bold,fontSize: 18)),
+              leading: Icon(Icons.view_comfy_sharp,size: 30,color: Colors.black),
+              title: Text('VIEW FEEDBACKS',style: GoogleFonts.cairo(fontWeight: FontWeight.bold,fontSize: 18,color: Colors.deepPurple)),
               onTap: (){
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
                   return ViewFeedbacks();
@@ -79,8 +110,8 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             ListTile(
               style: ListTileStyle.drawer,
-              leading: Icon(Icons.view_comfy_sharp,size: 30),
-              title: Text('VIEW PAYMENTS',style: GoogleFonts.cairo(fontWeight: FontWeight.bold,fontSize: 18)),
+              leading: Icon(Icons.view_comfy_sharp,size: 30,color: Colors.black),
+              title: Text('VIEW PAYMENTS',style: GoogleFonts.cairo(fontWeight: FontWeight.bold,fontSize: 18,color: Colors.deepPurple)),
               onTap: (){
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
                   return ViewPayments();
@@ -89,13 +120,12 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             ListTile(
               style: ListTileStyle.drawer,
-              leading: Icon(Icons.logout,size: 30),
-              title: Text('LOGOUT',style: GoogleFonts.cairo(fontWeight: FontWeight.bold,fontSize: 18)),
-              onTap: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return LoginScreen();
-                },));
-              },
+              leading: Icon(Icons.logout,size: 30,color: Colors.black),
+              title: Text('LOGOUT',style: GoogleFonts.cairo(fontWeight: FontWeight.bold,fontSize: 18,color: Colors.deepPurple)),
+              onTap: ()
+                {
+                  showAlertDialog();
+                }
 
             ),
 

@@ -141,10 +141,35 @@ class _ViewUsersState extends State<ViewUsers> {
                                                       fontWeight: FontWeight.bold,
                                                     ),),
                                                     IconButton(
-                                                        onPressed: () async{
-                                                          await document.reference.delete();
-                                                        },
-                                                        icon: Icon(Icons.delete)),
+                                                      onPressed: () {
+                                                        showDialog(context: context,
+                                                            builder: (context){
+                                                              return Container(
+                                                                child: AlertDialog(
+                                                                  title: Text("Do you really want to delete this post ?"),
+                                                                  actions: [
+                                                                    TextButton(onPressed: ()async {
+                                                                      await document.reference.delete();
+
+                                                                      Navigator.pop(context);
+                                                                    },
+                                                                      child: Text("YES"),),
+                                                                    TextButton(onPressed: (){
+                                                                      Navigator.pop(context);
+                                                                    },
+                                                                      child: Text("NO"),),
+
+                                                                  ],
+                                                                ),
+                                                              );
+                                                            }
+                                                        );
+                                                      },
+                                                      icon: Icon(
+                                                        Icons.delete,
+                                                        color: Colors.red,
+                                                      ),
+                                                    ),
                                                   ],
                                                 ),
                                               ],
@@ -272,10 +297,35 @@ class _ViewUsersState extends State<ViewUsers> {
                                                 children: [
                                                   Text("DELETE: ",style: TextStyle(fontWeight: FontWeight.bold),),
                                                   IconButton(
-                                                      onPressed: () async{
-                                                        await document.reference.delete();
-                                                      },
-                                                      icon: Icon(Icons.delete)),
+                                                    onPressed: () {
+                                                      showDialog(context: context,
+                                                          builder: (context){
+                                                            return Container(
+                                                              child: AlertDialog(
+                                                                title: Text("Do you really want to delete this post ?"),
+                                                                actions: [
+                                                                  TextButton(onPressed: ()async {
+                                                                    await document.reference.delete();
+
+                                                                    Navigator.pop(context);
+                                                                  },
+                                                                    child: Text("YES"),),
+                                                                  TextButton(onPressed: (){
+                                                                    Navigator.pop(context);
+                                                                  },
+                                                                    child: Text("NO"),),
+
+                                                                ],
+                                                              ),
+                                                            );
+                                                          }
+                                                      );
+                                                    },
+                                                    icon: Icon(
+                                                      Icons.delete,
+                                                      color: Colors.red,
+                                                    ),
+                                                  ),
                                                 ],
                                               ),
                                             ],
@@ -398,10 +448,35 @@ class _ViewUsersState extends State<ViewUsers> {
                                               children: [
                                                 Text('DELETE',style: TextStyle(fontWeight: FontWeight.bold),),
                                                 IconButton(
-                                                    onPressed: () async{
-                                                      await document.reference.delete();
-                                                    },
-                                                    icon: Icon(Icons.delete)),
+                                                  onPressed: () {
+                                                    showDialog(context: context,
+                                                        builder: (context){
+                                                          return Container(
+                                                            child: AlertDialog(
+                                                              title: Text("Do you really want to delete this post ?"),
+                                                              actions: [
+                                                                TextButton(onPressed: ()async {
+                                                                  await document.reference.delete();
+
+                                                                  Navigator.pop(context);
+                                                                },
+                                                                  child: Text("YES"),),
+                                                                TextButton(onPressed: (){
+                                                                  Navigator.pop(context);
+                                                                },
+                                                                  child: Text("NO"),),
+
+                                                              ],
+                                                            ),
+                                                          );
+                                                        }
+                                                    );
+                                                  },
+                                                  icon: Icon(
+                                                    Icons.delete,
+                                                    color: Colors.red,
+                                                  ),
+                                                ),
                                               ],
                                             ),
                                           ],
