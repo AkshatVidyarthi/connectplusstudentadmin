@@ -142,13 +142,14 @@ class _LoginScreenState extends State<LoginScreen> {
                                   child: Text('LOGIN',style: GoogleFonts.arsenal(
                                     color: Colors.black,
                                     fontWeight: FontWeight.bold
-                                  ),)),
+                                  ),
+                                  )
+                              ),
                             ),
                           ),
                         ],
                       ),
                     ),
-
                  ],
                ),
              ),

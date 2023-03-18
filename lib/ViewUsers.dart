@@ -34,6 +34,7 @@ class _ViewUsersState extends State<ViewUsers> {
           ),
           body: TabBarView(
             children: [
+
               StreamBuilder(
                 stream:
                 FirebaseFirestore.instance.collection('users').snapshots(),
@@ -302,7 +303,7 @@ class _ViewUsersState extends State<ViewUsers> {
                                                           builder: (context){
                                                             return Container(
                                                               child: AlertDialog(
-                                                                title: Text("Do you really want to delete this post ?"),
+                                                                title: Text("Do you really want to delete this user ?"),
                                                                 actions: [
                                                                   TextButton(onPressed: ()async {
                                                                     await document.reference.delete();
@@ -453,7 +454,7 @@ class _ViewUsersState extends State<ViewUsers> {
                                                         builder: (context){
                                                           return Container(
                                                             child: AlertDialog(
-                                                              title: Text("Do you really want to delete this post ?"),
+                                                              title: Text("Do you really want to delete this user ?"),
                                                               actions: [
                                                                 TextButton(onPressed: ()async {
                                                                   await document.reference.delete();
@@ -504,3 +505,4 @@ class _ViewUsersState extends State<ViewUsers> {
         ));
   }
 }
+
