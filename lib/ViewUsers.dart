@@ -10,6 +10,7 @@ class ViewUsers extends StatefulWidget {
 
 class _ViewUsersState extends State<ViewUsers> {
   bool isVerified = false;
+  List<QueryDocumentSnapshot<Object?>> jobList = [];
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -31,10 +32,18 @@ class _ViewUsersState extends State<ViewUsers> {
                 ),
               ],
             ),
+            actions: [
+              IconButton(
+                  onPressed: () {
+                    showSearch(
+                        context: context,
+                        delegate: JobsSearchDelegate(jobList));
+                  },
+                  icon: const Icon(Icons.search_rounded)),
+            ],
           ),
           body: TabBarView(
             children: [
-
               StreamBuilder(
                 stream:
                 FirebaseFirestore.instance.collection('users').snapshots(),
@@ -44,7 +53,9 @@ class _ViewUsersState extends State<ViewUsers> {
                     return Center(
                       child: CircularProgressIndicator(),
                     );
-                  } else {
+                  }
+                  else
+                  {
                     if (snapshot.hasError) {
                       return Center(
                         child: Text("${snapshot.error}"),
@@ -54,6 +65,8 @@ class _ViewUsersState extends State<ViewUsers> {
                       if (data != null) {
                         final allUserDocs = data.docs;
                         return ListView(
+                          shrinkWrap: true,
+                          scrollDirection: Axis.vertical,
                           children: allUserDocs.map((document) {
                             return Padding(
                               padding: const EdgeInsets.all(8.0),
@@ -214,6 +227,8 @@ class _ViewUsersState extends State<ViewUsers> {
                       if (data != null) {
                         final allUserDocs = data.docs;
                         return ListView(
+                          scrollDirection: Axis.vertical,
+                          shrinkWrap: true,
                           children: allUserDocs.map((document) {
                             return Padding(
                               padding: const EdgeInsets.all(8.0),
@@ -369,6 +384,8 @@ class _ViewUsersState extends State<ViewUsers> {
                       if (data != null) {
                         final allUserDocs = data.docs;
                         return ListView(
+                          shrinkWrap: true,
+                          scrollDirection: Axis.vertical,
                           children: allUserDocs.map((document) {
                             return Padding(
                               padding: const EdgeInsets.all(8.0),
@@ -503,6 +520,170 @@ class _ViewUsersState extends State<ViewUsers> {
             ],
           ),
         ));
+  }
+}
+class JobsSearchDelegate extends SearchDelegate {
+  final List<QueryDocumentSnapshot<Object?>> jobList;
+
+  JobsSearchDelegate(this.jobList);
+
+  @override
+  List<Widget>? buildActions(BuildContext context) {
+    return [
+      CloseButton(
+        onPressed: () {
+          query = "";
+        },
+      )
+    ];
+  }
+
+  @override
+  Widget? buildLeading(BuildContext context) {
+    return const BackButton();
+  }
+
+  @override
+  Widget buildResults(BuildContext context) {
+    return const SizedBox();
+  }
+
+  @override
+  Widget buildSuggestions(BuildContext context) {
+    final filteredList = jobList
+        .where((element) =>
+        element
+            .get("fullName")
+            .toString()
+            .toLowerCase()
+            .contains(query.toLowerCase()
+        )
+    ).toList();
+
+    return ListView.builder(
+      scrollDirection: Axis.vertical,
+        shrinkWrap: true,
+        itemBuilder: (context,index)
+    {
+      return Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          children: [
+            SizedBox(
+              height: 30,
+            ),
+            Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Card(
+                elevation: 8.0,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    children: [
+                      Row(
+                        children: [
+                          Text('COURSE: ',
+                            style: GoogleFonts.cairo(
+                                fontSize: 16,fontWeight: FontWeight.bold
+                            ),),
+                          Text("${filteredList.get("course")}"),
+                          SizedBox(height: 10,),
+                        ],
+                      ),
+                      SizedBox(height: 10,),
+                      Row(
+                        children: [
+                          Text('FULL NAME: ',
+                            style: GoogleFonts.cairo(
+                                fontSize: 16,fontWeight: FontWeight.bold
+                            ),),
+                          Text("${document.get("fullName")}"),
+                        ],
+                      ),
+                      SizedBox(height: 10),
+                      Row(
+                        children: [
+                          Text('PASSING YEAR: ',
+                            style: GoogleFonts.cairo(
+                                fontSize: 16,fontWeight: FontWeight.bold
+                            ),),
+                          Text(
+                              "${document.get("passingYear")}"),
+                        ],
+                      ),
+                      SizedBox(height: 10),
+                      Row(
+                        children: [
+                          Text('Category: ',
+                            style: GoogleFonts.cairo(
+                                fontSize: 16,fontWeight: FontWeight.bold
+                            ),),
+                          Text("${document.get("type")}"),
+                        ],
+                      ),
+                      SizedBox(height: 10,),
+                      Row(
+                        children: [
+                          Text('ALLOW USER',style: TextStyle(fontWeight: FontWeight.bold),),
+                          Switch(
+                            value: document.get("isVerified"),
+                            onChanged: (value) {
+                              document.reference.set(
+                                {"isVerified": value},
+                                SetOptions(merge: true),
+                              );
+                            },
+                            activeTrackColor:
+                            Colors.deepPurpleAccent,
+                            activeColor: Colors.black,
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 10,),
+                      Row(
+                        children: [
+                          Text('DELETE',style: TextStyle(fontWeight: FontWeight.bold),),
+                          IconButton(
+                            onPressed: () {
+                              showDialog(context: context,
+                                  builder: (context){
+                                    return Container(
+                                      child: AlertDialog(
+                                        title: Text("Do you really want to delete this user ?"),
+                                        actions: [
+                                          TextButton(onPressed: ()async {
+                                            await document.reference.delete();
+
+                                            Navigator.pop(context);
+                                          },
+                                            child: Text("YES"),),
+                                          TextButton(onPressed: (){
+                                            Navigator.pop(context);
+                                          },
+                                            child: Text("NO"),),
+
+                                        ],
+                                      ),
+                                    );
+                                  }
+                              );
+                            },
+                            icon: Icon(
+                              Icons.delete,
+                              color: Colors.red,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      );
+    });
   }
 }
 
