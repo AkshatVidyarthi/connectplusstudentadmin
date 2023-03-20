@@ -73,7 +73,6 @@ class _ViewJobsState extends State<ViewJobs> {
                       icon: const Icon(Icons.search_rounded))
                 ],
               ),
-
               StreamBuilder(
                 stream: FirebaseFirestore.instance
                     .collection('PostedJobs')
@@ -390,7 +389,6 @@ class _ViewJobsState extends State<ViewJobs> {
                                 ),
                               ),
                             );
-
                           },
                           itemCount: jobList.length,
                         );
@@ -438,13 +436,28 @@ class JobsSearchDelegate extends SearchDelegate {
   @override
   Widget buildSuggestions(BuildContext context) {
     final filteredList = jobList
-        .where((element) => element
-            .get("Companyname")
-            .toString()
-            .toLowerCase()
-            .contains(query.toLowerCase()
-    )
-    ).toList();
+        .where((element) =>
+            element
+                .get("Companyname")
+                .toString()
+                .toLowerCase()
+                .contains(query.toLowerCase()) ||
+            element
+                .get("Location")
+                .toString()
+                .toLowerCase()
+                .contains(query.toLowerCase()) ||
+            element
+                .get("jobtitle")
+                .toString()
+                .toLowerCase()
+                .contains(query.toLowerCase()) ||
+            element
+                .get("qualification")
+                .toString()
+                .toLowerCase()
+                .contains(query.toLowerCase()))
+        .toList();
 
     return ListView.builder(
       scrollDirection: Axis.vertical,
@@ -713,10 +726,5 @@ class JobsSearchDelegate extends SearchDelegate {
       },
       itemCount: filteredList.length,
     );
-
-
-
-
-
   }
 }

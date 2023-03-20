@@ -43,24 +43,24 @@ class _ViewInternshipsState extends State<ViewInternships> {
                       padding: const EdgeInsets.all(8.0),
                       child: selectedDate == null
                           ? IconButton(
-                          onPressed: () async {
-                            final date = await showDateRangePicker(
-                              context: context,
-                              firstDate: DateTime(2000),
-                              lastDate: DateTime(3000),
-                            );
-                            selectedDate = date;
-                            print(date?.start);
-                            print(date?.end);
-                            setState(() {});
-                          },
-                          icon: const Icon(Icons.filter_alt))
+                              onPressed: () async {
+                                final date = await showDateRangePicker(
+                                  context: context,
+                                  firstDate: DateTime(2000),
+                                  lastDate: DateTime(3000),
+                                );
+                                selectedDate = date;
+                                print(date?.start);
+                                print(date?.end);
+                                setState(() {});
+                              },
+                              icon: const Icon(Icons.filter_alt))
                           : IconButton(
-                          onPressed: () {
-                            selectedDate = null;
-                            setState(() {});
-                          },
-                          icon: const Icon(Icons.close))),
+                              onPressed: () {
+                                selectedDate = null;
+                                setState(() {});
+                              },
+                              icon: const Icon(Icons.close))),
                   IconButton(
                       onPressed: () {
                         showSearch(
@@ -68,16 +68,15 @@ class _ViewInternshipsState extends State<ViewInternships> {
                             delegate: JobsSearchDelegate(jobList));
                       },
                       icon: const Icon(Icons.search_rounded))
-
                 ],
-
               ),
               StreamBuilder(
                 stream: FirebaseFirestore.instance
-                    .collection('PostedInternships').where("time",
-                    isGreaterThanOrEqualTo: selectedDate?.start.toUtc())
-                    .where(
-                    "time", isLessThanOrEqualTo: selectedDate?.end.toUtc())
+                    .collection('PostedInternships')
+                    .where("time",
+                        isGreaterThanOrEqualTo: selectedDate?.start.toUtc())
+                    .where("time",
+                        isLessThanOrEqualTo: selectedDate?.end.toUtc())
                     .snapshots(),
                 builder: (BuildContext context,
                     AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -103,21 +102,23 @@ class _ViewInternshipsState extends State<ViewInternships> {
                               padding: const EdgeInsets.all(16.0),
                               child: Card(
                                 shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10),),
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
                                 elevation: 8.0,
                                 child: Padding(
                                   padding: EdgeInsets.all(16),
-                                  child:
-                                  Column(
+                                  child: Column(
                                     children: [
                                       Row(
                                         children: [
-                                          Text('COMPANY NAME:  ',
+                                          Text(
+                                            'COMPANY NAME:  ',
                                             style: GoogleFonts.cairo(
                                               fontWeight: FontWeight.bold,
                                               color: Colors.black,
                                               fontSize: 15,
-                                            ),),
+                                            ),
+                                          ),
                                           Text(
                                               "${document.get("Companyname")}"),
                                         ],
@@ -127,12 +128,14 @@ class _ViewInternshipsState extends State<ViewInternships> {
                                       ),
                                       Row(
                                         children: [
-                                          Text('LOCATION: ',
+                                          Text(
+                                            'LOCATION: ',
                                             style: GoogleFonts.cairo(
                                               fontWeight: FontWeight.bold,
                                               color: Colors.black,
                                               fontSize: 15,
-                                            ),),
+                                            ),
+                                          ),
                                           Text("${document.get("Location")}"),
                                         ],
                                       ),
@@ -141,12 +144,14 @@ class _ViewInternshipsState extends State<ViewInternships> {
                                       ),
                                       Row(
                                         children: [
-                                          Text('EMAIL: ',
+                                          Text(
+                                            'EMAIL: ',
                                             style: GoogleFonts.cairo(
                                               fontWeight: FontWeight.bold,
                                               color: Colors.black,
                                               fontSize: 15,
-                                            ),),
+                                            ),
+                                          ),
                                           Text("${document.get("email")}"),
                                         ],
                                       ),
@@ -155,28 +160,31 @@ class _ViewInternshipsState extends State<ViewInternships> {
                                       ),
                                       Row(
                                         children: [
-                                          Text('JOB DESCRIPTION: ',
+                                          Text(
+                                            'JOB DESCRIPTION: ',
                                             style: GoogleFonts.cairo(
                                               fontWeight: FontWeight.bold,
                                               color: Colors.black,
                                               fontSize: 15,
-                                            ),),
-                                          Text("${document.get(
-                                              "jobdescription")}"),
+                                            ),
+                                          ),
+                                          Text(
+                                              "${document.get("jobdescription")}"),
                                         ],
                                       ),
-
                                       SizedBox(
                                         height: 10,
                                       ),
                                       Row(
                                         children: [
-                                          Text('DURATION OF THE INTERNSHIP: ',
+                                          Text(
+                                            'DURATION OF THE INTERNSHIP: ',
                                             style: GoogleFonts.cairo(
                                               fontWeight: FontWeight.bold,
                                               color: Colors.black,
                                               fontSize: 15,
-                                            ),),
+                                            ),
+                                          ),
                                           Text("${document.get("duration")}"),
                                         ],
                                       ),
@@ -185,12 +193,14 @@ class _ViewInternshipsState extends State<ViewInternships> {
                                       ),
                                       Row(
                                         children: [
-                                          Text('STIPEND OFFERED: ',
+                                          Text(
+                                            'STIPEND OFFERED: ',
                                             style: GoogleFonts.cairo(
                                               fontWeight: FontWeight.bold,
                                               color: Colors.black,
                                               fontSize: 15,
-                                            ),),
+                                            ),
+                                          ),
                                           Text("${document.get("stipend")}"),
                                         ],
                                       ),
@@ -199,12 +209,14 @@ class _ViewInternshipsState extends State<ViewInternships> {
                                       ),
                                       Row(
                                         children: [
-                                          Text('JOB TITLE:  ',
+                                          Text(
+                                            'JOB TITLE:  ',
                                             style: GoogleFonts.cairo(
                                               fontWeight: FontWeight.bold,
                                               color: Colors.black,
                                               fontSize: 15,
-                                            ),),
+                                            ),
+                                          ),
                                           Text("${document.get("jobtitle")}"),
                                         ],
                                       ),
@@ -213,12 +225,14 @@ class _ViewInternshipsState extends State<ViewInternships> {
                                       ),
                                       Row(
                                         children: [
-                                          Text('ALLOW USER?',
+                                          Text(
+                                            'ALLOW USER?',
                                             style: GoogleFonts.cairo(
                                               fontWeight: FontWeight.bold,
                                               color: Colors.black,
                                               fontSize: 15,
-                                            ),),
+                                            ),
+                                          ),
                                           Switch(
                                             value: document.get("isVerified"),
                                             onChanged: (value) {
@@ -226,8 +240,8 @@ class _ViewInternshipsState extends State<ViewInternships> {
                                                 "isVerified": value,
                                               }, SetOptions(merge: true));
                                             },
-                                            activeTrackColor: Colors
-                                                .deepPurpleAccent,
+                                            activeTrackColor:
+                                                Colors.deepPurpleAccent,
                                             activeColor: Colors.black,
                                           ),
                                         ],
@@ -247,7 +261,8 @@ class _ViewInternshipsState extends State<ViewInternships> {
                                           ),
                                           IconButton(
                                             onPressed: () {
-                                              showDialog(context: context,
+                                              showDialog(
+                                                  context: context,
                                                   builder: (context) {
                                                     return Container(
                                                       child: AlertDialog(
@@ -255,7 +270,8 @@ class _ViewInternshipsState extends State<ViewInternships> {
                                                             "Do you really want to delete this internship ?"),
                                                         actions: [
                                                           TextButton(
-                                                            onPressed: () async {
+                                                            onPressed:
+                                                                () async {
                                                               await document
                                                                   .reference
                                                                   .delete();
@@ -263,20 +279,19 @@ class _ViewInternshipsState extends State<ViewInternships> {
                                                               Navigator.pop(
                                                                   context);
                                                             },
-                                                            child: Text(
-                                                                "YES"),),
+                                                            child: Text("YES"),
+                                                          ),
                                                           TextButton(
                                                             onPressed: () {
                                                               Navigator.pop(
                                                                   context);
                                                             },
-                                                            child: Text("NO"),),
-
+                                                            child: Text("NO"),
+                                                          ),
                                                         ],
                                                       ),
                                                     );
-                                                  }
-                                              );
+                                                  });
                                             },
                                             icon: Icon(
                                               Icons.delete,
@@ -285,36 +300,44 @@ class _ViewInternshipsState extends State<ViewInternships> {
                                           ),
                                         ],
                                       ),
-                                      SizedBox(height: 8,),
+                                      SizedBox(
+                                        height: 8,
+                                      ),
                                       document.get("attachment") != null
                                           ? Row(
-                                        children: [
-                                          Text(
-                                              'DOWNLOAD INTERNSHIP DESCRIPTION',
-                                              style: GoogleFonts.cairo(
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 16,
-                                              )),
-                                          SizedBox(width: 10,),
-                                          CircleAvatar(
-                                            backgroundColor: Colors.transparent,
-                                            child: IconButton(
-                                                onPressed: () async {
-                                                  final url = document.get(
-                                                      "attachment");
-                                                  if (await canLaunchUrlString(
-                                                      url)) {
-                                                    launchUrlString(
-                                                      url,
-                                                    );
-                                                  }
-                                                },
-                                                icon: Icon(Icons.download,
-                                                  color: Colors.black,
-                                                  size: 24,)),
-                                          ),
-                                        ],
-                                      )
+                                              children: [
+                                                Text(
+                                                    'DOWNLOAD INTERNSHIP DESCRIPTION',
+                                                    style: GoogleFonts.cairo(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 16,
+                                                    )),
+                                                SizedBox(
+                                                  width: 10,
+                                                ),
+                                                CircleAvatar(
+                                                  backgroundColor:
+                                                      Colors.transparent,
+                                                  child: IconButton(
+                                                      onPressed: () async {
+                                                        final url = document
+                                                            .get("attachment");
+                                                        if (await canLaunchUrlString(
+                                                            url)) {
+                                                          launchUrlString(
+                                                            url,
+                                                          );
+                                                        }
+                                                      },
+                                                      icon: Icon(
+                                                        Icons.download,
+                                                        color: Colors.black,
+                                                        size: 24,
+                                                      )),
+                                                ),
+                                              ],
+                                            )
                                           : SizedBox(),
                                     ],
                                   ),
@@ -335,11 +358,10 @@ class _ViewInternshipsState extends State<ViewInternships> {
               ),
             ],
           ),
-        )
-
-    );
+        ));
   }
 }
+
 class JobsSearchDelegate extends SearchDelegate {
   final List<QueryDocumentSnapshot<Object?>> jobList;
 
@@ -370,14 +392,23 @@ class JobsSearchDelegate extends SearchDelegate {
   Widget buildSuggestions(BuildContext context) {
     final filteredList = jobList
         .where((element) =>
-        element
-            .get("Companyname")
-            .toString()
-            .toLowerCase()
-            .contains(query.toLowerCase()
-        )
-    ).toList();
-       return ListView.builder(
+            element
+                .get("Companyname")
+                .toString()
+                .toLowerCase()
+                .contains(query.toLowerCase()) ||
+            element
+                .get("Location")
+                .toString()
+                .toLowerCase()
+                .contains(query.toLowerCase()) ||
+            element
+                .get("jobtitle")
+                .toString()
+                .toLowerCase()
+                .contains(query.toLowerCase()))
+        .toList();
+    return ListView.builder(
       shrinkWrap: true,
       scrollDirection: Axis.vertical,
       itemBuilder: (context, index) {
@@ -386,23 +417,24 @@ class JobsSearchDelegate extends SearchDelegate {
           padding: const EdgeInsets.all(16.0),
           child: Card(
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10),),
+              borderRadius: BorderRadius.circular(10),
+            ),
             elevation: 8.0,
             child: Padding(
               padding: EdgeInsets.all(16),
-              child:
-              Column(
+              child: Column(
                 children: [
                   Row(
                     children: [
-                      Text('COMPANY NAME:  ',
+                      Text(
+                        'COMPANY NAME:  ',
                         style: GoogleFonts.cairo(
                           fontWeight: FontWeight.bold,
                           color: Colors.black,
                           fontSize: 15,
-                        ),),
-                      Text(
-                          "${document.get("Companyname")}"),
+                        ),
+                      ),
+                      Text("${document.get("Companyname")}"),
                     ],
                   ),
                   SizedBox(
@@ -410,12 +442,14 @@ class JobsSearchDelegate extends SearchDelegate {
                   ),
                   Row(
                     children: [
-                      Text('LOCATION: ',
+                      Text(
+                        'LOCATION: ',
                         style: GoogleFonts.cairo(
                           fontWeight: FontWeight.bold,
                           color: Colors.black,
                           fontSize: 15,
-                        ),),
+                        ),
+                      ),
                       Text("${document.get("Location")}"),
                     ],
                   ),
@@ -424,12 +458,14 @@ class JobsSearchDelegate extends SearchDelegate {
                   ),
                   Row(
                     children: [
-                      Text('EMAIL: ',
+                      Text(
+                        'EMAIL: ',
                         style: GoogleFonts.cairo(
                           fontWeight: FontWeight.bold,
                           color: Colors.black,
                           fontSize: 15,
-                        ),),
+                        ),
+                      ),
                       Text("${document.get("email")}"),
                     ],
                   ),
@@ -438,28 +474,30 @@ class JobsSearchDelegate extends SearchDelegate {
                   ),
                   Row(
                     children: [
-                      Text('JOB DESCRIPTION: ',
+                      Text(
+                        'JOB DESCRIPTION: ',
                         style: GoogleFonts.cairo(
                           fontWeight: FontWeight.bold,
                           color: Colors.black,
                           fontSize: 15,
-                        ),),
-                      Text("${document.get(
-                          "jobdescription")}"),
+                        ),
+                      ),
+                      Text("${document.get("jobdescription")}"),
                     ],
                   ),
-
                   SizedBox(
                     height: 10,
                   ),
                   Row(
                     children: [
-                      Text('DURATION OF THE INTERNSHIP: ',
+                      Text(
+                        'DURATION OF THE INTERNSHIP: ',
                         style: GoogleFonts.cairo(
                           fontWeight: FontWeight.bold,
                           color: Colors.black,
                           fontSize: 15,
-                        ),),
+                        ),
+                      ),
                       Text("${document.get("duration")}"),
                     ],
                   ),
@@ -468,12 +506,14 @@ class JobsSearchDelegate extends SearchDelegate {
                   ),
                   Row(
                     children: [
-                      Text('STIPEND OFFERED: ',
+                      Text(
+                        'STIPEND OFFERED: ',
                         style: GoogleFonts.cairo(
                           fontWeight: FontWeight.bold,
                           color: Colors.black,
                           fontSize: 15,
-                        ),),
+                        ),
+                      ),
                       Text("${document.get("stipend")}"),
                     ],
                   ),
@@ -482,12 +522,14 @@ class JobsSearchDelegate extends SearchDelegate {
                   ),
                   Row(
                     children: [
-                      Text('JOB TITLE:  ',
+                      Text(
+                        'JOB TITLE:  ',
                         style: GoogleFonts.cairo(
                           fontWeight: FontWeight.bold,
                           color: Colors.black,
                           fontSize: 15,
-                        ),),
+                        ),
+                      ),
                       Text("${document.get("jobtitle")}"),
                     ],
                   ),
@@ -496,12 +538,14 @@ class JobsSearchDelegate extends SearchDelegate {
                   ),
                   Row(
                     children: [
-                      Text('ALLOW USER?',
+                      Text(
+                        'ALLOW USER?',
                         style: GoogleFonts.cairo(
                           fontWeight: FontWeight.bold,
                           color: Colors.black,
                           fontSize: 15,
-                        ),),
+                        ),
+                      ),
                       Switch(
                         value: document.get("isVerified"),
                         onChanged: (value) {
@@ -509,8 +553,7 @@ class JobsSearchDelegate extends SearchDelegate {
                             "isVerified": value,
                           }, SetOptions(merge: true));
                         },
-                        activeTrackColor: Colors
-                            .deepPurpleAccent,
+                        activeTrackColor: Colors.deepPurpleAccent,
                         activeColor: Colors.black,
                       ),
                     ],
@@ -530,7 +573,8 @@ class JobsSearchDelegate extends SearchDelegate {
                       ),
                       IconButton(
                         onPressed: () {
-                          showDialog(context: context,
+                          showDialog(
+                              context: context,
                               builder: (context) {
                                 return Container(
                                   child: AlertDialog(
@@ -539,27 +583,22 @@ class JobsSearchDelegate extends SearchDelegate {
                                     actions: [
                                       TextButton(
                                         onPressed: () async {
-                                          await document
-                                              .reference
-                                              .delete();
+                                          await document.reference.delete();
 
-                                          Navigator.pop(
-                                              context);
+                                          Navigator.pop(context);
                                         },
-                                        child: Text(
-                                            "YES"),),
+                                        child: Text("YES"),
+                                      ),
                                       TextButton(
                                         onPressed: () {
-                                          Navigator.pop(
-                                              context);
+                                          Navigator.pop(context);
                                         },
-                                        child: Text("NO"),),
-
+                                        child: Text("NO"),
+                                      ),
                                     ],
                                   ),
                                 );
-                              }
-                          );
+                              });
                         },
                         icon: Icon(
                           Icons.delete,
@@ -568,36 +607,39 @@ class JobsSearchDelegate extends SearchDelegate {
                       ),
                     ],
                   ),
-                  SizedBox(height: 8,),
+                  SizedBox(
+                    height: 8,
+                  ),
                   document.get("attachment") != null
                       ? Row(
-                    children: [
-                      Text(
-                          'DOWNLOAD INTERNSHIP DESCRIPTION',
-                          style: GoogleFonts.cairo(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
-                          )),
-                      SizedBox(width: 10,),
-                      CircleAvatar(
-                        backgroundColor: Colors.transparent,
-                        child: IconButton(
-                            onPressed: () async {
-                              final url = document.get(
-                                  "attachment");
-                              if (await canLaunchUrlString(
-                                  url)) {
-                                launchUrlString(
-                                  url,
-                                );
-                              }
-                            },
-                            icon: Icon(Icons.download,
-                              color: Colors.black,
-                              size: 24,)),
-                      ),
-                    ],
-                  )
+                          children: [
+                            Text('DOWNLOAD INTERNSHIP DESCRIPTION',
+                                style: GoogleFonts.cairo(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16,
+                                )),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            CircleAvatar(
+                              backgroundColor: Colors.transparent,
+                              child: IconButton(
+                                  onPressed: () async {
+                                    final url = document.get("attachment");
+                                    if (await canLaunchUrlString(url)) {
+                                      launchUrlString(
+                                        url,
+                                      );
+                                    }
+                                  },
+                                  icon: Icon(
+                                    Icons.download,
+                                    color: Colors.black,
+                                    size: 24,
+                                  )),
+                            ),
+                          ],
+                        )
                       : SizedBox(),
                 ],
               ),
@@ -609,4 +651,3 @@ class JobsSearchDelegate extends SearchDelegate {
     );
   }
 }
-

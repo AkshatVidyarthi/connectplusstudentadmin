@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+
 class ViewUsers extends StatefulWidget {
   const ViewUsers({Key? key}) : super(key: key);
 
@@ -10,7 +11,8 @@ class ViewUsers extends StatefulWidget {
 
 class _ViewUsersState extends State<ViewUsers> {
   bool isVerified = false;
-  List<QueryDocumentSnapshot<Object?>> jobList = [];
+  List<QueryDocumentSnapshot<Object?>> allUserDocs = [];
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -37,7 +39,7 @@ class _ViewUsersState extends State<ViewUsers> {
                   onPressed: () {
                     showSearch(
                         context: context,
-                        delegate: JobsSearchDelegate(jobList));
+                        delegate: JobsSearchDelegate(allUserDocs));
                   },
                   icon: const Icon(Icons.search_rounded)),
             ],
@@ -46,16 +48,14 @@ class _ViewUsersState extends State<ViewUsers> {
             children: [
               StreamBuilder(
                 stream:
-                FirebaseFirestore.instance.collection('users').snapshots(),
+                    FirebaseFirestore.instance.collection('users').snapshots(),
                 builder: (BuildContext context,
                     AsyncSnapshot<QuerySnapshot> snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return Center(
                       child: CircularProgressIndicator(),
                     );
-                  }
-                  else
-                  {
+                  } else {
                     if (snapshot.hasError) {
                       return Center(
                         child: Text("${snapshot.error}"),
@@ -63,7 +63,7 @@ class _ViewUsersState extends State<ViewUsers> {
                     } else {
                       final data = snapshot.data;
                       if (data != null) {
-                        final allUserDocs = data.docs;
+                        allUserDocs = data.docs;
                         return ListView(
                           shrinkWrap: true,
                           scrollDirection: Axis.vertical,
@@ -80,10 +80,12 @@ class _ViewUsersState extends State<ViewUsers> {
                                     Padding(
                                       padding: EdgeInsets.all(8.0),
                                       child: Padding(
-                                        padding: const EdgeInsets.symmetric(horizontal:16.0),
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 16.0),
                                         child: Card(
                                           shape: RoundedRectangleBorder(
-                                              borderRadius: BorderRadius.circular(10)),
+                                              borderRadius:
+                                                  BorderRadius.circular(10)),
                                           elevation: 8.0,
                                           child: Padding(
                                             padding: const EdgeInsets.all(8.0),
@@ -91,30 +93,43 @@ class _ViewUsersState extends State<ViewUsers> {
                                               children: [
                                                 Row(
                                                   children: [
-                                                    Text('COURSE: ',
+                                                    Text(
+                                                      'COURSE: ',
                                                       style: GoogleFonts.cairo(
-                                                          fontSize: 16,fontWeight: FontWeight.bold
-                                                      ),),
-                                                    Text("${document.get("course")}"),
+                                                          fontSize: 16,
+                                                          fontWeight:
+                                                              FontWeight.bold),
+                                                    ),
+                                                    Text(
+                                                        "${document.get("course")}"),
                                                   ],
                                                 ),
-                                                SizedBox(height: 10,),
+                                                SizedBox(
+                                                  height: 10,
+                                                ),
                                                 Row(
                                                   children: [
-                                                    Text('FULLNAME:  ',
+                                                    Text(
+                                                      'FULLNAME:  ',
                                                       style: GoogleFonts.cairo(
-                                                          fontSize: 16,fontWeight: FontWeight.bold
-                                                      ),),
-                                                    Text("${document.get("fullName")}"),
+                                                          fontSize: 16,
+                                                          fontWeight:
+                                                              FontWeight.bold),
+                                                    ),
+                                                    Text(
+                                                        "${document.get("fullName")}"),
                                                   ],
                                                 ),
                                                 SizedBox(height: 10),
                                                 Row(
                                                   children: [
-                                                    Text('PASSING YEAR:  ',
+                                                    Text(
+                                                      'PASSING YEAR:  ',
                                                       style: GoogleFonts.cairo(
-                                                          fontSize: 16,fontWeight: FontWeight.bold
-                                                      ),),
+                                                          fontSize: 16,
+                                                          fontWeight:
+                                                              FontWeight.bold),
+                                                    ),
                                                     Text(
                                                         "${document.get("passingYear")}"),
                                                   ],
@@ -122,62 +137,89 @@ class _ViewUsersState extends State<ViewUsers> {
                                                 SizedBox(height: 10),
                                                 Row(
                                                   children: [
-                                                    Text('CATEGORY: ',
+                                                    Text(
+                                                      'CATEGORY: ',
                                                       style: GoogleFonts.cairo(
-                                                          fontSize: 16,fontWeight: FontWeight.bold
-                                                      ),),
-                                                    Text("${document.get("type")}"),
+                                                          fontSize: 16,
+                                                          fontWeight:
+                                                              FontWeight.bold),
+                                                    ),
+                                                    Text(
+                                                        "${document.get("type")}"),
                                                   ],
                                                 ),
-                                               SizedBox(height: 10,),
+                                                SizedBox(
+                                                  height: 10,
+                                                ),
                                                 Row(
                                                   children: [
-                                                    Text('ALLOW USER?',style: TextStyle(
-                                                      fontWeight: FontWeight.bold
-                                                    )),
+                                                    Text('ALLOW USER?',
+                                                        style: TextStyle(
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold)),
                                                     Switch(
-                                                      value: document.get("isVerified"),
+                                                      value: document
+                                                          .get("isVerified"),
                                                       onChanged: (value) {
                                                         document.reference.set(
                                                           {"isVerified": value},
-                                                          SetOptions(merge: true),
+                                                          SetOptions(
+                                                              merge: true),
                                                         );
                                                       },
-                                                      activeTrackColor:
-                                                      Colors.deepPurpleAccent,
+                                                      activeTrackColor: Colors
+                                                          .deepPurpleAccent,
                                                       activeColor: Colors.black,
                                                     ),
                                                   ],
                                                 ),
                                                 Row(
                                                   children: [
-                                                    Text('DELETE USER?',style: TextStyle(
-                                                      fontWeight: FontWeight.bold,
-                                                    ),),
+                                                    Text(
+                                                      'DELETE USER?',
+                                                      style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                      ),
+                                                    ),
                                                     IconButton(
                                                       onPressed: () {
-                                                        showDialog(context: context,
-                                                            builder: (context){
+                                                        showDialog(
+                                                            context: context,
+                                                            builder: (context) {
                                                               return Container(
-                                                                child: AlertDialog(
-                                                                  title: Text("Do you really want to delete this post ?"),
+                                                                child:
+                                                                    AlertDialog(
+                                                                  title: Text(
+                                                                      "Do you really want to delete this post ?"),
                                                                   actions: [
-                                                                    TextButton(onPressed: ()async {
-                                                                      await document.reference.delete();
+                                                                    TextButton(
+                                                                      onPressed:
+                                                                          () async {
+                                                                        await document
+                                                                            .reference
+                                                                            .delete();
 
-                                                                      Navigator.pop(context);
-                                                                    },
-                                                                      child: Text("YES"),),
-                                                                    TextButton(onPressed: (){
-                                                                      Navigator.pop(context);
-                                                                    },
-                                                                      child: Text("NO"),),
-
+                                                                        Navigator.pop(
+                                                                            context);
+                                                                      },
+                                                                      child: Text(
+                                                                          "YES"),
+                                                                    ),
+                                                                    TextButton(
+                                                                      onPressed:
+                                                                          () {
+                                                                        Navigator.pop(
+                                                                            context);
+                                                                      },
+                                                                      child: Text(
+                                                                          "NO"),
+                                                                    ),
                                                                   ],
                                                                 ),
                                                               );
-                                                            }
-                                                        );
+                                                            });
                                                       },
                                                       icon: Icon(
                                                         Icons.delete,
@@ -198,8 +240,7 @@ class _ViewUsersState extends State<ViewUsers> {
                             );
                           }).toList(),
                         );
-                      }
-                      else {
+                      } else {
                         return Center(
                           child: Text("Data not found"),
                         );
@@ -209,8 +250,10 @@ class _ViewUsersState extends State<ViewUsers> {
                 },
               ),
               StreamBuilder(
-                stream:
-                FirebaseFirestore.instance.collection('users').where("type",isEqualTo: "student").snapshots(),
+                stream: FirebaseFirestore.instance
+                    .collection('users')
+                    .where("type", isEqualTo: "student")
+                    .snapshots(),
                 builder: (BuildContext context,
                     AsyncSnapshot<QuerySnapshot> snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
@@ -225,7 +268,7 @@ class _ViewUsersState extends State<ViewUsers> {
                     } else {
                       final data = snapshot.data;
                       if (data != null) {
-                        final allUserDocs = data.docs;
+                        allUserDocs = data.docs;
                         return ListView(
                           scrollDirection: Axis.vertical,
                           shrinkWrap: true,
@@ -243,39 +286,52 @@ class _ViewUsersState extends State<ViewUsers> {
                                       padding: const EdgeInsets.all(8.0),
                                       child: Card(
                                         shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(10)),
+                                            borderRadius:
+                                                BorderRadius.circular(10)),
                                         elevation: 8.0,
                                         child: Padding(
                                           padding: const EdgeInsets.all(8.0),
                                           child: Column(
                                             children: [
                                               Row(
-
                                                 children: [
-                                                  Text('COURSE: ',
+                                                  Text(
+                                                    'COURSE: ',
                                                     style: GoogleFonts.cairo(
-                                                        fontSize: 16,fontWeight: FontWeight.bold
-                                                    ),),
-                                                  Text("${document.get("course")}"),
+                                                        fontSize: 16,
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                  ),
+                                                  Text(
+                                                      "${document.get("course")}"),
                                                 ],
                                               ),
-                                              SizedBox(height: 10,),
+                                              SizedBox(
+                                                height: 10,
+                                              ),
                                               Row(
                                                 children: [
-                                                  Text('FULL NAME: ',
+                                                  Text(
+                                                    'FULL NAME: ',
                                                     style: GoogleFonts.cairo(
-                                                        fontSize: 16,fontWeight: FontWeight.bold
-                                                    ),),
-                                                  Text("${document.get("fullName")}"),
+                                                        fontSize: 16,
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                  ),
+                                                  Text(
+                                                      "${document.get("fullName")}"),
                                                 ],
                                               ),
                                               SizedBox(height: 10),
                                               Row(
                                                 children: [
-                                                  Text('PASSING YEAR: ',
+                                                  Text(
+                                                    'PASSING YEAR: ',
                                                     style: GoogleFonts.cairo(
-                                                        fontSize: 16,fontWeight: FontWeight.bold
-                                                    ),),
+                                                        fontSize: 16,
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                  ),
                                                   Text(
                                                       "${document.get("passingYear")}"),
                                                 ],
@@ -283,19 +339,31 @@ class _ViewUsersState extends State<ViewUsers> {
                                               SizedBox(height: 10),
                                               Row(
                                                 children: [
-                                                  Text('CATEGORY: ',
+                                                  Text(
+                                                    'CATEGORY: ',
                                                     style: GoogleFonts.cairo(
-                                                        fontSize: 16,fontWeight: FontWeight.bold
-                                                    ),),
-                                                  Text("${document.get("type")}"),
+                                                        fontSize: 16,
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                  ),
+                                                  Text(
+                                                      "${document.get("type")}"),
                                                 ],
                                               ),
-                                              SizedBox(height: 10,),
+                                              SizedBox(
+                                                height: 10,
+                                              ),
                                               Row(
                                                 children: [
-                                                  Text('ALLOW USER',style: TextStyle(fontWeight: FontWeight.bold),),
+                                                  Text(
+                                                    'ALLOW USER',
+                                                    style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                  ),
                                                   Switch(
-                                                    value: document.get("isVerified"),
+                                                    value: document
+                                                        .get("isVerified"),
                                                     onChanged: (value) {
                                                       document.reference.set(
                                                         {"isVerified": value},
@@ -303,39 +371,59 @@ class _ViewUsersState extends State<ViewUsers> {
                                                       );
                                                     },
                                                     activeTrackColor:
-                                                    Colors.deepPurpleAccent,
+                                                        Colors.deepPurpleAccent,
                                                     activeColor: Colors.black,
                                                   ),
                                                 ],
                                               ),
-                                              SizedBox(height: 10,),
+                                              SizedBox(
+                                                height: 10,
+                                              ),
                                               Row(
                                                 children: [
-                                                  Text("DELETE: ",style: TextStyle(fontWeight: FontWeight.bold),),
+                                                  Text(
+                                                    "DELETE: ",
+                                                    style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                  ),
                                                   IconButton(
                                                     onPressed: () {
-                                                      showDialog(context: context,
-                                                          builder: (context){
+                                                      showDialog(
+                                                          context: context,
+                                                          builder: (context) {
                                                             return Container(
-                                                              child: AlertDialog(
-                                                                title: Text("Do you really want to delete this user ?"),
+                                                              child:
+                                                                  AlertDialog(
+                                                                title: Text(
+                                                                    "Do you really want to delete this user ?"),
                                                                 actions: [
-                                                                  TextButton(onPressed: ()async {
-                                                                    await document.reference.delete();
+                                                                  TextButton(
+                                                                    onPressed:
+                                                                        () async {
+                                                                      await document
+                                                                          .reference
+                                                                          .delete();
 
-                                                                    Navigator.pop(context);
-                                                                  },
-                                                                    child: Text("YES"),),
-                                                                  TextButton(onPressed: (){
-                                                                    Navigator.pop(context);
-                                                                  },
-                                                                    child: Text("NO"),),
-
+                                                                      Navigator.pop(
+                                                                          context);
+                                                                    },
+                                                                    child: Text(
+                                                                        "YES"),
+                                                                  ),
+                                                                  TextButton(
+                                                                    onPressed:
+                                                                        () {
+                                                                      Navigator.pop(
+                                                                          context);
+                                                                    },
+                                                                    child: Text(
+                                                                        "NO"),
+                                                                  ),
                                                                 ],
                                                               ),
                                                             );
-                                                          }
-                                                      );
+                                                          });
                                                     },
                                                     icon: Icon(
                                                       Icons.delete,
@@ -355,8 +443,7 @@ class _ViewUsersState extends State<ViewUsers> {
                             );
                           }).toList(),
                         );
-                      }
-                      else {
+                      } else {
                         return Center(
                           child: Text("Data not found"),
                         );
@@ -366,8 +453,10 @@ class _ViewUsersState extends State<ViewUsers> {
                 },
               ),
               StreamBuilder(
-                stream:
-                FirebaseFirestore.instance.collection('users').where("type",isEqualTo: "alumni").snapshots(),
+                stream: FirebaseFirestore.instance
+                    .collection('users')
+                    .where("type", isEqualTo: "alumni")
+                    .snapshots(),
                 builder: (BuildContext context,
                     AsyncSnapshot<QuerySnapshot> snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
@@ -382,7 +471,7 @@ class _ViewUsersState extends State<ViewUsers> {
                     } else {
                       final data = snapshot.data;
                       if (data != null) {
-                        final allUserDocs = data.docs;
+                        allUserDocs = data.docs;
                         return ListView(
                           shrinkWrap: true,
                           scrollDirection: Axis.vertical,
@@ -404,31 +493,46 @@ class _ViewUsersState extends State<ViewUsers> {
                                           children: [
                                             Row(
                                               children: [
-                                                Text('COURSE: ',
+                                                Text(
+                                                  'COURSE: ',
                                                   style: GoogleFonts.cairo(
-                                                      fontSize: 16,fontWeight: FontWeight.bold
-                                                  ),),
-                                                Text("${document.get("course")}"),
-                                                SizedBox(height: 10,),
+                                                      fontSize: 16,
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                ),
+                                                Text(
+                                                    "${document.get("course")}"),
+                                                SizedBox(
+                                                  height: 10,
+                                                ),
                                               ],
                                             ),
-                                            SizedBox(height: 10,),
+                                            SizedBox(
+                                              height: 10,
+                                            ),
                                             Row(
                                               children: [
-                                                Text('FULL NAME: ',
+                                                Text(
+                                                  'FULL NAME: ',
                                                   style: GoogleFonts.cairo(
-                                                      fontSize: 16,fontWeight: FontWeight.bold
-                                                  ),),
-                                                Text("${document.get("fullName")}"),
+                                                      fontSize: 16,
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                ),
+                                                Text(
+                                                    "${document.get("fullName")}"),
                                               ],
                                             ),
                                             SizedBox(height: 10),
                                             Row(
                                               children: [
-                                                Text('PASSING YEAR: ',
+                                                Text(
+                                                  'PASSING YEAR: ',
                                                   style: GoogleFonts.cairo(
-                                                      fontSize: 16,fontWeight: FontWeight.bold
-                                                  ),),
+                                                      fontSize: 16,
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                ),
                                                 Text(
                                                     "${document.get("passingYear")}"),
                                               ],
@@ -436,19 +540,30 @@ class _ViewUsersState extends State<ViewUsers> {
                                             SizedBox(height: 10),
                                             Row(
                                               children: [
-                                                Text('Category: ',
+                                                Text(
+                                                  'Category: ',
                                                   style: GoogleFonts.cairo(
-                                                      fontSize: 16,fontWeight: FontWeight.bold
-                                                  ),),
+                                                      fontSize: 16,
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                ),
                                                 Text("${document.get("type")}"),
                                               ],
                                             ),
-                                            SizedBox(height: 10,),
+                                            SizedBox(
+                                              height: 10,
+                                            ),
                                             Row(
                                               children: [
-                                                Text('ALLOW USER',style: TextStyle(fontWeight: FontWeight.bold),),
+                                                Text(
+                                                  'ALLOW USER',
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                ),
                                                 Switch(
-                                                  value: document.get("isVerified"),
+                                                  value: document
+                                                      .get("isVerified"),
                                                   onChanged: (value) {
                                                     document.reference.set(
                                                       {"isVerified": value},
@@ -456,39 +571,58 @@ class _ViewUsersState extends State<ViewUsers> {
                                                     );
                                                   },
                                                   activeTrackColor:
-                                                  Colors.deepPurpleAccent,
+                                                      Colors.deepPurpleAccent,
                                                   activeColor: Colors.black,
                                                 ),
                                               ],
                                             ),
-                                            SizedBox(height: 10,),
+                                            SizedBox(
+                                              height: 10,
+                                            ),
                                             Row(
                                               children: [
-                                                Text('DELETE',style: TextStyle(fontWeight: FontWeight.bold),),
+                                                Text(
+                                                  'DELETE',
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                ),
                                                 IconButton(
                                                   onPressed: () {
-                                                    showDialog(context: context,
-                                                        builder: (context){
+                                                    showDialog(
+                                                        context: context,
+                                                        builder: (context) {
                                                           return Container(
                                                             child: AlertDialog(
-                                                              title: Text("Do you really want to delete this user ?"),
+                                                              title: Text(
+                                                                  "Do you really want to delete this user ?"),
                                                               actions: [
-                                                                TextButton(onPressed: ()async {
-                                                                  await document.reference.delete();
+                                                                TextButton(
+                                                                  onPressed:
+                                                                      () async {
+                                                                    await document
+                                                                        .reference
+                                                                        .delete();
 
-                                                                  Navigator.pop(context);
-                                                                },
-                                                                  child: Text("YES"),),
-                                                                TextButton(onPressed: (){
-                                                                  Navigator.pop(context);
-                                                                },
-                                                                  child: Text("NO"),),
-
+                                                                    Navigator.pop(
+                                                                        context);
+                                                                  },
+                                                                  child: Text(
+                                                                      "YES"),
+                                                                ),
+                                                                TextButton(
+                                                                  onPressed:
+                                                                      () {
+                                                                    Navigator.pop(
+                                                                        context);
+                                                                  },
+                                                                  child: Text(
+                                                                      "NO"),
+                                                                ),
                                                               ],
                                                             ),
                                                           );
-                                                        }
-                                                    );
+                                                        });
                                                   },
                                                   icon: Icon(
                                                     Icons.delete,
@@ -507,8 +641,7 @@ class _ViewUsersState extends State<ViewUsers> {
                             );
                           }).toList(),
                         );
-                      }
-                      else {
+                      } else {
                         return Center(
                           child: Text("Data not found"),
                         );
@@ -522,6 +655,7 @@ class _ViewUsersState extends State<ViewUsers> {
         ));
   }
 }
+
 class JobsSearchDelegate extends SearchDelegate {
   final List<QueryDocumentSnapshot<Object?>> jobList;
 
@@ -552,138 +686,169 @@ class JobsSearchDelegate extends SearchDelegate {
   Widget buildSuggestions(BuildContext context) {
     final filteredList = jobList
         .where((element) =>
-        element
-            .get("fullName")
-            .toString()
-            .toLowerCase()
-            .contains(query.toLowerCase()
-        )
-    ).toList();
+            element
+                .get("fullName")
+                .toString()
+                .toLowerCase()
+                .contains(query.toLowerCase()) ||
+            element
+                .get("course")
+                .toString()
+                .toLowerCase()
+                .contains(query.toLowerCase()) ||
+            element
+                .get("passingYear")
+                .toString()
+                .toLowerCase()
+                .contains(query.toLowerCase()))
+        .toList();
 
     return ListView.builder(
       scrollDirection: Axis.vertical,
-        shrinkWrap: true,
-        itemBuilder: (context,index)
-    {
-      return Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          children: [
-            SizedBox(
-              height: 30,
-            ),
-            Padding(
-              padding: EdgeInsets.all(8.0),
-              child: Card(
-                elevation: 8.0,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    children: [
-                      Row(
-                        children: [
-                          Text('COURSE: ',
-                            style: GoogleFonts.cairo(
-                                fontSize: 16,fontWeight: FontWeight.bold
-                            ),),
-                          Text("${filteredList.get("course")}"),
-                          SizedBox(height: 10,),
-                        ],
-                      ),
-                      SizedBox(height: 10,),
-                      Row(
-                        children: [
-                          Text('FULL NAME: ',
-                            style: GoogleFonts.cairo(
-                                fontSize: 16,fontWeight: FontWeight.bold
-                            ),),
-                          Text("${document.get("fullName")}"),
-                        ],
-                      ),
-                      SizedBox(height: 10),
-                      Row(
-                        children: [
-                          Text('PASSING YEAR: ',
-                            style: GoogleFonts.cairo(
-                                fontSize: 16,fontWeight: FontWeight.bold
-                            ),),
-                          Text(
-                              "${document.get("passingYear")}"),
-                        ],
-                      ),
-                      SizedBox(height: 10),
-                      Row(
-                        children: [
-                          Text('Category: ',
-                            style: GoogleFonts.cairo(
-                                fontSize: 16,fontWeight: FontWeight.bold
-                            ),),
-                          Text("${document.get("type")}"),
-                        ],
-                      ),
-                      SizedBox(height: 10,),
-                      Row(
-                        children: [
-                          Text('ALLOW USER',style: TextStyle(fontWeight: FontWeight.bold),),
-                          Switch(
-                            value: document.get("isVerified"),
-                            onChanged: (value) {
-                              document.reference.set(
-                                {"isVerified": value},
-                                SetOptions(merge: true),
-                              );
-                            },
-                            activeTrackColor:
-                            Colors.deepPurpleAccent,
-                            activeColor: Colors.black,
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 10,),
-                      Row(
-                        children: [
-                          Text('DELETE',style: TextStyle(fontWeight: FontWeight.bold),),
-                          IconButton(
-                            onPressed: () {
-                              showDialog(context: context,
-                                  builder: (context){
-                                    return Container(
-                                      child: AlertDialog(
-                                        title: Text("Do you really want to delete this user ?"),
-                                        actions: [
-                                          TextButton(onPressed: ()async {
-                                            await document.reference.delete();
-
-                                            Navigator.pop(context);
-                                          },
-                                            child: Text("YES"),),
-                                          TextButton(onPressed: (){
-                                            Navigator.pop(context);
-                                          },
-                                            child: Text("NO"),),
-
-                                        ],
-                                      ),
-                                    );
-                                  }
-                              );
-                            },
-                            icon: Icon(
-                              Icons.delete,
-                              color: Colors.red,
+      shrinkWrap: true,
+      itemBuilder: (context, index) {
+        final document = filteredList[index];
+        return Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            children: [
+              SizedBox(
+                height: 30,
+              ),
+              Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Card(
+                  elevation: 8.0,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      children: [
+                        Row(
+                          children: [
+                            Text(
+                              'COURSE: ',
+                              style: GoogleFonts.cairo(
+                                  fontSize: 16, fontWeight: FontWeight.bold),
                             ),
-                          ),
-                        ],
-                      ),
-                    ],
+                            Text("${document.get("course")}"),
+                            SizedBox(
+                              height: 10,
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Row(
+                          children: [
+                            Text(
+                              'FULL NAME: ',
+                              style: GoogleFonts.cairo(
+                                  fontSize: 16, fontWeight: FontWeight.bold),
+                            ),
+                            Text("${document.get("fullName")}"),
+                          ],
+                        ),
+                        SizedBox(height: 10),
+                        Row(
+                          children: [
+                            Text(
+                              'PASSING YEAR: ',
+                              style: GoogleFonts.cairo(
+                                  fontSize: 16, fontWeight: FontWeight.bold),
+                            ),
+                            Text("${document.get("passingYear")}"),
+                          ],
+                        ),
+                        SizedBox(height: 10),
+                        Row(
+                          children: [
+                            Text(
+                              'Category: ',
+                              style: GoogleFonts.cairo(
+                                  fontSize: 16, fontWeight: FontWeight.bold),
+                            ),
+                            Text("${document.get("type")}"),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Row(
+                          children: [
+                            Text(
+                              'ALLOW USER',
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                            Switch(
+                              value: document.get("isVerified"),
+                              onChanged: (value) {
+                                document.reference.set(
+                                  {"isVerified": value},
+                                  SetOptions(merge: true),
+                                );
+                              },
+                              activeTrackColor: Colors.deepPurpleAccent,
+                              activeColor: Colors.black,
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Row(
+                          children: [
+                            Text(
+                              'DELETE',
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                            IconButton(
+                              onPressed: () {
+                                showDialog(
+                                    context: context,
+                                    builder: (context) {
+                                      return Container(
+                                        child: AlertDialog(
+                                          title: Text(
+                                              "Do you really want to delete this user ?"),
+                                          actions: [
+                                            TextButton(
+                                              onPressed: () async {
+                                                await document.reference
+                                                    .delete();
+
+                                                Navigator.pop(context);
+                                              },
+                                              child: Text("YES"),
+                                            ),
+                                            TextButton(
+                                              onPressed: () {
+                                                Navigator.pop(context);
+                                              },
+                                              child: Text("NO"),
+                                            ),
+                                          ],
+                                        ),
+                                      );
+                                    });
+                              },
+                              icon: Icon(
+                                Icons.delete,
+                                color: Colors.red,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
-        ),
-      );
-    });
+            ],
+          ),
+        );
+      },
+      itemCount: filteredList.length,
+    );
   }
 }
-
