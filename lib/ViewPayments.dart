@@ -16,7 +16,7 @@ class _ViewPaymentsState extends State<ViewPayments> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.deepPurple,
-        title: Text('View Payments'),
+        title: Text('Payments'),
       ),
       body: StreamBuilder(
         stream: FirebaseFirestore.instance.collection('payments').snapshots(),
@@ -128,7 +128,7 @@ class _ViewPaymentsState extends State<ViewPayments> {
                               SizedBox(
                                 height: 10,
                               ),
-                              Row(
+                              /*Row(
                                 children: [
                                   Text(
                                     'MOBILE NUMBER: ',
@@ -172,7 +172,7 @@ class _ViewPaymentsState extends State<ViewPayments> {
                                     .collection("users")
                                     .doc(document.get("userId"))
                                     .get(),
-                              ),
+                              ),*/
                             ],
                           ),
                         ),

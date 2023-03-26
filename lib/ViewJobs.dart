@@ -24,7 +24,7 @@ class _ViewJobsState extends State<ViewJobs> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text('VIEW JOBS'),
+          title: const Text('Jobs'),
           elevation: 8.0,
           backgroundColor: Colors.deepPurpleAccent,
         ),
@@ -70,7 +70,8 @@ class _ViewJobsState extends State<ViewJobs> {
                             context: context,
                             delegate: JobsSearchDelegate(jobList));
                       },
-                      icon: const Icon(Icons.search_rounded))
+                      icon: const Icon(Icons.search_rounded),
+                  )
                 ],
               ),
               StreamBuilder(
@@ -430,7 +431,8 @@ class JobsSearchDelegate extends SearchDelegate {
 
   @override
   Widget buildResults(BuildContext context) {
-    return const SizedBox();
+    return const SizedBox(
+    );
   }
 
   @override

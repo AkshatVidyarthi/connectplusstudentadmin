@@ -13,7 +13,7 @@ class _ViewFeedbacksState extends State<ViewFeedbacks> {
     return Scaffold(
       appBar: AppBar(
         elevation: 8.0,
-        title: Text('VIEW FEEDBACKS'),
+        title: Text('Feedbacks'),
         backgroundColor: Colors.deepPurpleAccent,
       ),
       body: StreamBuilder(

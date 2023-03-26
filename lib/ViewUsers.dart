@@ -20,7 +20,7 @@ class _ViewUsersState extends State<ViewUsers> {
         child: Scaffold(
           appBar: AppBar(
             backgroundColor: Colors.deepPurpleAccent,
-            title: Text('View Users'),
+            title: Text('Users'),
             bottom: TabBar(
               tabs: [
                 Tab(

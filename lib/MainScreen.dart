@@ -63,7 +63,7 @@ class _HomeScreenState extends State<HomeScreen> {
             SizedBox(height: 20,),
             Center(child: Text('Connect+ Student',style: GoogleFonts.arsenal(fontWeight: FontWeight.bold),)),
             SizedBox(height: 20,),
-            Image.asset('connect-student-logo-removebg-preview.png',height: 160,width: 160),
+            Image.asset('assets/connect-student-logo-removebg-preview.png',height: 160,width: 160),
             Text('AKSHAT VIDYARTHI',style: GoogleFonts.arsenal(fontWeight: FontWeight.bold,fontSize: 20),),
             SizedBox(height: 6,),
             Text('ADMIN PANEL',style: TextStyle(fontWeight: FontWeight.bold)),
@@ -136,7 +136,7 @@ class _HomeScreenState extends State<HomeScreen> {
       body: Column(
         children: [
           SizedBox(height: 10,),
-          Center(child: Image.asset('connect-student-logo-removebg-preview.png',width: 240)),
+          Center(child: Image.asset('assets/connect-student-logo-removebg-preview.png',width: 240)),
           Text('Welcome Back Admin!',style: GoogleFonts.arsenal(
             fontWeight: FontWeight.bold,
             fontSize: 18,

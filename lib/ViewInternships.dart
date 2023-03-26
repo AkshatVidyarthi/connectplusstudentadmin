@@ -21,7 +21,7 @@ class _ViewInternshipsState extends State<ViewInternships> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text('VIEW INTERNSHIPS'),
+          title: const Text('Internships'),
           elevation: 8.0,
           backgroundColor: Colors.deepPurpleAccent,
         ),
