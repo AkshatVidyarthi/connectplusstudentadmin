@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class ViewUsers extends StatefulWidget {
   const ViewUsers({Key? key}) : super(key: key);
@@ -120,7 +121,49 @@ class _ViewUsersState extends State<ViewUsers> {
                                                         "${document.get("fullName")}"),
                                                   ],
                                                 ),
+                                                SizedBox(height: 10,),
+                                                Row(
+                                                  children: [
+                                                    Text(
+                                                      'Stream: ',
+                                                      style: GoogleFonts.cairo(
+                                                          fontSize: 16,
+                                                          fontWeight:
+                                                          FontWeight.bold),
+                                                    ),
+                                                    Text(
+                                                        "${document.get("stream")}"),
+                                                  ],
+                                                ),
+                                                SizedBox(height: 10,),
+                                                Row(
+                                                  children: [
+                                                    Text(
+                                                      ' College ID: ',
+                                                      style: GoogleFonts.cairo(
+                                                          fontSize: 16,
+                                                          fontWeight:
+                                                          FontWeight.bold),
+                                                    ),
+                                                    Text(
+                                                        "${document.get("id")}"),
+                                                  ],
+                                                ),
                                                 SizedBox(height: 10),
+                                                Row(
+                                                  children: [
+                                                    Text(
+                                                      'Course: ',
+                                                      style: GoogleFonts.cairo(
+                                                          fontSize: 16,
+                                                          fontWeight:
+                                                          FontWeight.bold),
+                                                    ),
+                                                    Text(
+                                                        "${document.get("course")}"),
+                                                  ],
+                                                ),
+                                                SizedBox(height: 10,),
                                                 Row(
                                                   children: [
                                                     Text(
@@ -178,57 +221,99 @@ class _ViewUsersState extends State<ViewUsers> {
                                                   children: [
                                                     Text(
                                                       'DELETE USER?',
-                                                      style: TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.bold,
+                                                      style: GoogleFonts.cairo(
+                                                        fontWeight: FontWeight.bold,
+                                                        color: Colors.black,
+                                                        fontSize: 15,
                                                       ),
                                                     ),
+
                                                     IconButton(
                                                       onPressed: () {
                                                         showDialog(
                                                             context: context,
                                                             builder: (context) {
                                                               return Container(
-                                                                child:
-                                                                    AlertDialog(
-                                                                  title: Text(
-                                                                      "Do you really want to delete this post ?"),
+                                                                child: AlertDialog(
+                                                                  title: const Text(
+                                                                      "Do you really want to delete this job ?"),
                                                                   actions: [
                                                                     TextButton(
-                                                                      onPressed:
-                                                                          () async {
-                                                                        await document
-                                                                            .reference
-                                                                            .delete();
+                                                                      onPressed: () async {
+                                                                        await document.reference.delete();
 
-                                                                        Navigator.pop(
-                                                                            context);
+                                                                        Navigator.pop(context);
                                                                       },
-                                                                      child: Text(
-                                                                          "YES"),
+                                                                      child: const Text("YES"),
                                                                     ),
                                                                     TextButton(
-                                                                      onPressed:
-                                                                          () {
-                                                                        Navigator.pop(
-                                                                            context);
+                                                                      onPressed: () {
+                                                                        Navigator.pop(context);
                                                                       },
-                                                                      child: Text(
-                                                                          "NO"),
+                                                                      child: const Text("NO"),
                                                                     ),
                                                                   ],
                                                                 ),
                                                               );
                                                             });
                                                       },
-                                                      icon: Icon(
+                                                      icon: const Icon(
                                                         Icons.delete,
                                                         color: Colors.red,
                                                       ),
                                                     ),
                                                   ],
                                                 ),
-                                              ],
+                                                Row(
+                                                  children: [
+                                                    const SizedBox(
+                                                      height: 8,
+                                                    ),
+
+                                                document.get("attachment") != null ||
+                                                    document
+                                                        .get("attachment")
+                                                        .toString()
+                                                        .toLowerCase() !=
+                                                        "null"
+                                                    ? Row(
+                                                  children: [
+                                                    Text('DOWNLOAD MARKSHEET',
+                                                        style: GoogleFonts.cairo(
+                                                          fontWeight:
+                                                          FontWeight.bold,
+                                                          fontSize: 16,
+                                                        )),
+                                                    const SizedBox(
+                                                      width: 10,
+                                                    ),
+                                                    CircleAvatar(
+                                                      backgroundColor:
+                                                      Colors.transparent,
+                                                      child: IconButton(
+                                                          onPressed: () async {
+                                                            final url = document
+                                                                .get("attachment");
+                                                            if (await canLaunchUrlString(
+                                                                url)) {
+                                                              launchUrlString(
+                                                                url,
+                                                              );
+                                                            }
+                                                          },
+                                                          icon: const Icon(
+                                                            Icons.download,
+                                                            color: Colors.black,
+                                                            size: 24,
+                                                          )),
+                                                    ),
+                                                  ],
+                                                )
+                                                    : const SizedBox(
+                                                ),
+                                          ],
+                                      ),
+                                          ],
                                             ),
                                           ),
                                         ),
@@ -478,165 +563,256 @@ class _ViewUsersState extends State<ViewUsers> {
                           children: allUserDocs.map((document) {
                             return Padding(
                               padding: const EdgeInsets.all(8.0),
-                              child: Column(
-                                children: [
-                                  SizedBox(
-                                    height: 30,
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsets.all(8.0),
-                                    child: Card(
-                                      elevation: 8.0,
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Column(
+                                  children: [
+                                    SizedBox(
+                                      height: 30,
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsets.all(8.0),
                                       child: Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Column(
-                                          children: [
-                                            Row(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 16.0),
+                                        child: Card(
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                              BorderRadius.circular(10)),
+                                          elevation: 8.0,
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Column(
                                               children: [
-                                                Text(
-                                                  'COURSE: ',
-                                                  style: GoogleFonts.cairo(
-                                                      fontSize: 16,
-                                                      fontWeight:
+                                                Row(
+                                                  children: [
+                                                    Text(
+                                                      'COURSE: ',
+                                                      style: GoogleFonts.cairo(
+                                                          fontSize: 16,
+                                                          fontWeight:
                                                           FontWeight.bold),
+                                                    ),
+                                                    Text(
+                                                        "${document.get("course")}"),
+                                                  ],
                                                 ),
-                                                Text(
-                                                    "${document.get("course")}"),
                                                 SizedBox(
                                                   height: 10,
                                                 ),
-                                              ],
-                                            ),
-                                            SizedBox(
-                                              height: 10,
-                                            ),
-                                            Row(
-                                              children: [
-                                                Text(
-                                                  'FULL NAME: ',
-                                                  style: GoogleFonts.cairo(
-                                                      fontSize: 16,
-                                                      fontWeight:
+                                                Row(
+                                                  children: [
+                                                    Text(
+                                                      'FULLNAME:  ',
+                                                      style: GoogleFonts.cairo(
+                                                          fontSize: 16,
+                                                          fontWeight:
                                                           FontWeight.bold),
+                                                    ),
+                                                    Text(
+                                                        "${document.get("fullName")}"),
+                                                  ],
                                                 ),
-                                                Text(
-                                                    "${document.get("fullName")}"),
-                                              ],
-                                            ),
-                                            SizedBox(height: 10),
-                                            Row(
-                                              children: [
-                                                Text(
-                                                  'PASSING YEAR: ',
-                                                  style: GoogleFonts.cairo(
-                                                      fontSize: 16,
-                                                      fontWeight:
+                                                SizedBox(height: 10,),
+                                                Row(
+                                                  children: [
+                                                    Text(
+                                                      'Stream: ',
+                                                      style: GoogleFonts.cairo(
+                                                          fontSize: 16,
+                                                          fontWeight:
                                                           FontWeight.bold),
+                                                    ),
+                                                    Text(
+                                                        "${document.get("stream")}"),
+                                                  ],
                                                 ),
-                                                Text(
-                                                    "${document.get("passingYear")}"),
-                                              ],
-                                            ),
-                                            SizedBox(height: 10),
-                                            Row(
-                                              children: [
-                                                Text(
-                                                  'Category: ',
-                                                  style: GoogleFonts.cairo(
-                                                      fontSize: 16,
-                                                      fontWeight:
+                                                SizedBox(height: 10,),
+                                                Row(
+                                                  children: [
+                                                    Text(
+                                                      ' College ID: ',
+                                                      style: GoogleFonts.cairo(
+                                                          fontSize: 16,
+                                                          fontWeight:
                                                           FontWeight.bold),
+                                                    ),
+                                                    Text(
+                                                        "${document.get("id")}"),
+                                                  ],
                                                 ),
-                                                Text("${document.get("type")}"),
-                                              ],
-                                            ),
-                                            SizedBox(
-                                              height: 10,
-                                            ),
-                                            Row(
-                                              children: [
-                                                Text(
-                                                  'ALLOW USER',
-                                                  style: TextStyle(
-                                                      fontWeight:
+                                                SizedBox(height: 10),
+                                                Row(
+                                                  children: [
+                                                    Text(
+                                                      'Course: ',
+                                                      style: GoogleFonts.cairo(
+                                                          fontSize: 16,
+                                                          fontWeight:
                                                           FontWeight.bold),
+                                                    ),
+                                                    Text(
+                                                        "${document.get("course")}"),
+                                                  ],
                                                 ),
-                                                Switch(
-                                                  value: document
-                                                      .get("isVerified"),
-                                                  onChanged: (value) {
-                                                    document.reference.set(
-                                                      {"isVerified": value},
-                                                      SetOptions(merge: true),
-                                                    );
-                                                  },
-                                                  activeTrackColor:
-                                                      Colors.deepPurpleAccent,
-                                                  activeColor: Colors.black,
-                                                ),
-                                              ],
-                                            ),
-                                            SizedBox(
-                                              height: 10,
-                                            ),
-                                            Row(
-                                              children: [
-                                                Text(
-                                                  'DELETE',
-                                                  style: TextStyle(
-                                                      fontWeight:
+                                                SizedBox(height: 10,),
+                                                Row(
+                                                  children: [
+                                                    Text(
+                                                      'PASSING YEAR:  ',
+                                                      style: GoogleFonts.cairo(
+                                                          fontSize: 16,
+                                                          fontWeight:
                                                           FontWeight.bold),
+                                                    ),
+                                                    Text(
+                                                        "${document.get("passingYear")}"),
+                                                  ],
                                                 ),
-                                                IconButton(
-                                                  onPressed: () {
-                                                    showDialog(
-                                                        context: context,
-                                                        builder: (context) {
-                                                          return Container(
-                                                            child: AlertDialog(
-                                                              title: Text(
-                                                                  "Do you really want to delete this user ?"),
-                                                              actions: [
-                                                                TextButton(
-                                                                  onPressed:
-                                                                      () async {
-                                                                    await document
-                                                                        .reference
-                                                                        .delete();
+                                                SizedBox(height: 10),
+                                                Row(
+                                                  children: [
+                                                    Text(
+                                                      'CATEGORY: ',
+                                                      style: GoogleFonts.cairo(
+                                                          fontSize: 16,
+                                                          fontWeight:
+                                                          FontWeight.bold),
+                                                    ),
+                                                    Text(
+                                                        "${document.get("type")}"),
+                                                  ],
+                                                ),
+                                                SizedBox(
+                                                  height: 10,
+                                                ),
+                                                Row(
+                                                  children: [
+                                                    Text('ALLOW USER?',
+                                                        style: TextStyle(
+                                                            fontWeight:
+                                                            FontWeight
+                                                                .bold)),
+                                                    Switch(
+                                                      value: document
+                                                          .get("isVerified"),
+                                                      onChanged: (value) {
+                                                        document.reference.set(
+                                                          {"isVerified": value},
+                                                          SetOptions(
+                                                              merge: true),
+                                                        );
+                                                      },
+                                                      activeTrackColor: Colors
+                                                          .deepPurpleAccent,
+                                                      activeColor: Colors.black,
+                                                    ),
+                                                  ],
+                                                ),
+                                                Row(
+                                                  children: [
+                                                    Text(
+                                                      'DELETE USER?',
+                                                      style: GoogleFonts.cairo(
+                                                        fontWeight: FontWeight.bold,
+                                                        color: Colors.black,
+                                                        fontSize: 15,
+                                                      ),
+                                                    ),
 
-                                                                    Navigator.pop(
-                                                                        context);
-                                                                  },
-                                                                  child: Text(
-                                                                      "YES"),
+                                                    IconButton(
+                                                      onPressed: () {
+                                                        showDialog(
+                                                            context: context,
+                                                            builder: (context) {
+                                                              return Container(
+                                                                child: AlertDialog(
+                                                                  title: const Text(
+                                                                      "Do you really want to delete this job ?"),
+                                                                  actions: [
+                                                                    TextButton(
+                                                                      onPressed: () async {
+                                                                        await document.reference.delete();
+
+                                                                        Navigator.pop(context);
+                                                                      },
+                                                                      child: const Text("YES"),
+                                                                    ),
+                                                                    TextButton(
+                                                                      onPressed: () {
+                                                                        Navigator.pop(context);
+                                                                      },
+                                                                      child: const Text("NO"),
+                                                                    ),
+                                                                  ],
                                                                 ),
-                                                                TextButton(
-                                                                  onPressed:
-                                                                      () {
-                                                                    Navigator.pop(
-                                                                        context);
-                                                                  },
-                                                                  child: Text(
-                                                                      "NO"),
-                                                                ),
-                                                              ],
-                                                            ),
-                                                          );
-                                                        });
-                                                  },
-                                                  icon: Icon(
-                                                    Icons.delete,
-                                                    color: Colors.red,
-                                                  ),
+                                                              );
+                                                            });
+                                                      },
+                                                      icon: const Icon(
+                                                        Icons.delete,
+                                                        color: Colors.red,
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                                Row(
+                                                  children: [
+                                                    const SizedBox(
+                                                      height: 8,
+                                                    ),
+
+                                                    document.get("attachment") != null ||
+                                                        document
+                                                            .get("attachment")
+                                                            .toString()
+                                                            .toLowerCase() !=
+                                                            "null"
+                                                        ? Row(
+                                                      children: [
+                                                        Text('DOWNLOAD MARKSHEET',
+                                                            style: GoogleFonts.cairo(
+                                                              fontWeight:
+                                                              FontWeight.bold,
+                                                              fontSize: 16,
+                                                            )),
+                                                        const SizedBox(
+                                                          width: 10,
+                                                        ),
+                                                        CircleAvatar(
+                                                          backgroundColor:
+                                                          Colors.transparent,
+                                                          child: IconButton(
+                                                              onPressed: () async {
+                                                                final url = document
+                                                                    .get("attachment");
+                                                                if (await canLaunchUrlString(
+                                                                    url)) {
+                                                                  launchUrlString(
+                                                                    url,
+                                                                  );
+                                                                }
+                                                              },
+                                                              icon: const Icon(
+                                                                Icons.download,
+                                                                color: Colors.black,
+                                                                size: 24,
+                                                              )),
+                                                        ),
+                                                      ],
+                                                    )
+                                                        : const SizedBox(
+                                                    ),
+                                                  ],
                                                 ),
                                               ],
                                             ),
-                                          ],
+                                          ),
                                         ),
                                       ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             );
                           }).toList(),
@@ -696,6 +872,11 @@ class JobsSearchDelegate extends SearchDelegate {
                 .toString()
                 .toLowerCase()
                 .contains(query.toLowerCase()) ||
+                element
+                    .get("id")
+                    .toString()
+                    .toLowerCase()
+                    .contains(query.toLowerCase())||
             element
                 .get("passingYear")
                 .toString()
